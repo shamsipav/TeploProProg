@@ -1,0 +1,134 @@
+﻿@model TeploPro.Models.HomeViewModels.ResultTemperatureViewModel
+@{
+    ViewData["Title"] = "ResultTemperature";
+}
+    <section class="result-main">
+        <div class="container">
+            <div class="result-main__head">
+                <h2 class="result-main__heading">Результаты расчета теоретической температуры горения углерода кокса</h2>
+                @*<a class="result-main__back" asp-area="" asp-controller="Home" asp-action="Index">Назад</a>*@
+            </div>
+
+            <table id="resultTable" class="result-table _temperature">
+                @* ИСХОДНЫЕ ДАННЫЕ *@
+                <tr>
+                    <td colspan="5" style="text-align: center; background-color: #ffd05b;">ИСХОДНЫЕ ДАННЫЕ</td>
+                </tr>
+                <tr>
+                    <th colspan="3">Параметр</th>
+                    <th scope="col">Значение</th>
+                    <th scope="col">Ед. изм.</th>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Содержание кислорода в дутье</td>
+                    <td>@Model.Input.OxygenContentInTheBlast</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Температура горячего дутья</td>
+                    <td>@Model.Input.HotBlastTemperature</td>
+                    <td>°C</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Содержание влаги в дутье</td>
+                    <td>
+                        @Model.Input.MoistureContentInTheBlast
+                </td>
+                <td>г/м<sup>3</sup></td>
+            </tr>
+            <tr>
+                <td colspan="3" scope="row">Количество углерода, сгорающего у фурм</td>
+                <td>
+                    @Model.Input.AmountOfCarbonBurnedAtTheTuyeres
+            </td>
+            <td>кг/т чугуна</td>
+            </tr>
+            <tr>
+                <td colspan="3" scope="row">Расход природного газа</td>
+                <td>
+                    @Model.Input.NaturalGasConsumption
+            </td>
+            <td>м<sup>3</sup>/т чугуна</td>
+            </tr>
+            <tr>
+                <td colspan="3" scope="row">Теплота горения природного газа на фурмах</td>
+                <td>
+                    @Model.Input.HeatOfBurningOfNaturalGasOnFarms
+            </td>
+            <td>кДж/м3</td>
+            </tr>
+            <tr>
+                <td colspan="3" scope="row">Теплота неполного горения углерода кокса</td>
+                <td>
+                    @Model.Input.HeatOfIncompleteBurningCarbonOfCoke
+            </td>
+            <td>кДж/кг</td>
+            </tr>
+
+            @* РЕЗУЛЬТАТЫ РАСЧЕТА *@
+            <tr>
+                <td colspan="5" style="text-align: center; background-color: aquamarine;">РЕЗУЛЬТАТЫ РАСЧЕТА</td>
+            </tr>
+            <tr>
+                <td colspan="3" scope="row">Расход дутья, необходимый для сжигания 1 кг углерода кокса</td>
+                <td>@Math.Round(Model.Result.BlastConsumptionRequiredForBurningOneKgOfCarbonCoke, 4)</td>
+                <td>м<sup>3</sup>/кг</td>
+            </tr>
+            <tr>
+                <td colspan="3" scope="row">Расход дутья, необходимый для конверсии 1 м<sup>3</sup> природного газа</td>
+                <td>@Math.Round(Model.Result.BlastConsumptionForConversionOfOneMeterCoubOfNaturalGas, 4)</td>
+                <td>м<sup>3</sup>/м<sup>3</sup></td>
+            </tr>
+            <tr>
+                <td colspan="3" scope="row">Выход фурменного газа в расчёте на 1 кг углерода кокса, сгорающего у фурм</td>
+                <td>@Math.Round(Model.Result.OutputOfTheTuyereGasBurningAtTheTuyeres, 4)</td>
+                <td>м<sup>3</sup>/кг</td>
+            </tr>
+            <tr>
+                <td colspan="3" scope="row">Выход фурменного газа из 1 м<sup>3</sup> природного газа при его конверсии в фурменном очаге</td>
+                <td>@Math.Round(Model.Result.OutputOfTuyereGasOfNaturalGasDuringСonversion, 4)</td>
+                <td>м<sup>3</sup>/м<sup>3</sup></td>
+            </tr>
+            <tr>
+                <td colspan="3" scope="row">Теплоёмкость двухатомных газов при температуре горячего дутья</td>
+                <td>@Math.Round(Model.Result.HeatCapacityOfDiatomicGasesAtHotBlastTemperature, 4)</td>
+                <td>кДж/(м<sup>3</sup> &#x2219 К)</td>
+            </tr>
+            <tr>
+                <td colspan="3" scope="row">Теплоёмкость паров воды при температуре горячего дутья</td>
+                <td>@Math.Round(Model.Result.HeatCapacityOfWaterVaporAtHotBlastTemperature, 4)</td>
+                <td>кДж/(м<sup>3</sup> &#x2219 К)</td>
+            </tr>
+            <tr>
+                <td colspan="3" scope="row">Теплосодержание горячего дутья за вычетом теплоты разложения влаги дутья</td>
+                <td>@Math.Round(Model.Result.HeatContentOfHotBlast, 4)</td>
+                <td>кДж/м<sup>3</sup></td>
+            </tr>
+            <tr>
+                <td colspan="3" scope="row">Теплосодержание углерода кокса пришедшего к фурмам</td>
+                <td>@Math.Round(Model.Result.HeatContentOfCarbonOfCokeToTuyeres, 4)</td>
+                <td>кДж/кг</td>
+            </tr>
+            <tr>
+                <td colspan="3" scope="row">Расход природного газа в расчете на 1 кг кокса, приходящего к фурмам</td>
+                <td>@Math.Round(Model.Result.NaturalGasConsumptionPerOneKgOfCoke, 4)</td>
+                <td>м<sup>3</sup>/кг</td>
+            </tr>
+            <tr>
+                <td colspan="3" scope="row">Теплосодержание горновых газов</td>
+                <td>@Math.Round(Model.Result.HeatContentOfFurnaceGases, 4)</td>
+                <td>кДж/м<sup>3</sup></td>
+            </tr>
+            <tr style="background-color: aquamarine;">
+                <td colspan="3" scope="row"><b>Теоретическая температура горения углерода кокса</b></td>
+                <td id="theoreticalTemperature">@Math.Round(Model.Result.TheoreticalBurningTemperatureOfCarbonCoke, 4)</td>
+                <td>°С</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;">ДАТА ПРОВЕДЕНИЯ РАСЧЕТА</td>
+                <td colspan="3" style="text-align: center;">@Model.Input.DateOfResult</td>
+            </tr>
+            </table>
+            <p class="result-main__description">Практикой работы доменного цеха ОАО "Чусовской металлургический завод" и печей ОАО "НТМК", выплавлающих ванадиевый чугун, установлено, что нормальному режиму работы печей соответствует уровень теоретических температур горения 1950-2100°С</p>
+        </div>
+    </section>

@@ -1,0 +1,213 @@
+﻿@model ReferenceModel
+@{
+    ViewData["Title"] = "Справочник";
+}
+
+<section class="reference">
+    <div class="container">
+        <div class="reference__head head-content">
+            <h2 class="reference__heading title">Cправочник корректировочных коэффициентов</h2>
+            @*<p class="reference__description">влияния параметров плавки в проектном периоде на показатели работы доменной печи</p>*@
+            <a class="main__back" asp-area="" asp-controller="Home" asp-action="Index">Назад</a>
+        </div>
+        <form action="/Home/CoefficientsReference" method="post" class="form reference__form form-reference">
+            <table class="table reference__table">
+                <tr>
+                    <th rowspan="2">Фактор</th>
+                    <th colspan="4">Изменение, %</th>
+                </tr>
+                <tr>
+                    <td class="text-center" colspan="3">Расход кокса</td>
+                    <td colspan="3">Производительность печи</td>
+                </tr>
+                <tr class="table__row">
+                    <td colspan="3" scope="row">Увеличение массовой доли железа в рудной сыпи на 1 %</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.IronMassFractionIncreaseInOreRash" value=@Model.CokeCunsumptionCoefficents.IronMassFractionIncreaseInOreRash>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.IronMassFractionIncreaseInOreRash" value=@Model.FurnanceCapacityCoefficents.IronMassFractionIncreaseInOreRash>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td colspan="3" scope="row">Снижение доли сырой руды в шихте на 1 %</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.ShareCrudeOreReductionCharge" value=@Model.CokeCunsumptionCoefficents.ShareCrudeOreReductionCharge>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.ShareCrudeOreReductionCharge" value=@Model.FurnanceCapacityCoefficents.ShareCrudeOreReductionCharge>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td colspan="3" scope="row">Повышение температуры дутья на T = 10 ºС в пределах:</td>
+                </tr>
+                <tr class="table__row">
+                    <td class="text-right" colspan="3" scope="row">T = 800...900 ºC</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.TemperatureIncreaseInRangeOf800to900" value=@Model.CokeCunsumptionCoefficents.TemperatureIncreaseInRangeOf800to900>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.TemperatureIncreaseInRangeOf800to900" value=@Model.FurnanceCapacityCoefficents.TemperatureIncreaseInRangeOf800to900>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td class="text-right" colspan="3" scope="row">T = 901...1000 ºC</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.TemperatureIncreaseInRangeOf901to1000" value=@Model.CokeCunsumptionCoefficents.TemperatureIncreaseInRangeOf901to1000>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.TemperatureIncreaseInRangeOf901to1000" value=@Model.FurnanceCapacityCoefficents.TemperatureIncreaseInRangeOf901to1000>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td class="text-right" colspan="3" scope="row">T = 1001...1100 ºC</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.TemperatureIncreaseInRangeOf1001to1100" value=@Model.CokeCunsumptionCoefficents.TemperatureIncreaseInRangeOf1001to1100>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.TemperatureIncreaseInRangeOf1001to1100" value=@Model.FurnanceCapacityCoefficents.TemperatureIncreaseInRangeOf1001to1100>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td class="text-right" colspan="3" scope="row">T = 1101...1200 ºC</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.TemperatureIncreaseInRangeOf1101to1200" value=@Model.CokeCunsumptionCoefficents.TemperatureIncreaseInRangeOf1101to1200>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.TemperatureIncreaseInRangeOf1101to1200" value=@Model.FurnanceCapacityCoefficents.TemperatureIncreaseInRangeOf1101to1200>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td colspan="3" scope="row">Повышение давления газа под колошником на 0,1 кг/см<sup>2</sup> (0,01 Мпа)</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.IncreaseGasPressureUnderGrate" value=@Model.CokeCunsumptionCoefficents.IncreaseGasPressureUnderGrate>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.IncreaseGasPressureUnderGrate" value=@Model.FurnanceCapacityCoefficents.IncreaseGasPressureUnderGrate>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td colspan="3" scope="row">Снижение массовой доли кремния в чугуне на 0,1 %</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.ReductionMassFractionOfSiliciumInChugun" value=@Model.CokeCunsumptionCoefficents.ReductionMassFractionOfSiliciumInChugun>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.ReductionMassFractionOfSiliciumInChugun" value=@Model.FurnanceCapacityCoefficents.ReductionMassFractionOfSiliciumInChugun>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td colspan="3" scope="row">Снижение массовой доли серы в чугуне на 0,01 %</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.ReductionMassFractionOfSeraInChugun" value=@Model.CokeCunsumptionCoefficents.ReductionMassFractionOfSeraInChugun>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.ReductionMassFractionOfSeraInChugun" value=@Model.FurnanceCapacityCoefficents.ReductionMassFractionOfSeraInChugun>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td colspan="3" scope="row">Увеличение массовой доли фосфора в чугуне на 0,1 %</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.IncreaseMassFractionOfPhosphorusInChugun" value=@Model.CokeCunsumptionCoefficents.IncreaseMassFractionOfPhosphorusInChugun>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.IncreaseMassFractionOfPhosphorusInChugun" value=@Model.FurnanceCapacityCoefficents.IncreaseMassFractionOfPhosphorusInChugun>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td colspan="3" scope="row">Увеличение массовой доли марганца в чугуне на 0,1 %</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.IncreaseMassFractionOfManganeseInChugun" value=@Model.CokeCunsumptionCoefficents.IncreaseMassFractionOfManganeseInChugun>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.IncreaseMassFractionOfManganeseInChugun" value=@Model.FurnanceCapacityCoefficents.IncreaseMassFractionOfManganeseInChugun>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td colspan="3" scope="row">Увеличение массовой доли титана в чугуне на 0,1 %</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.IncreaseMassFractionOfTitanInChugun" value=@Model.CokeCunsumptionCoefficents.IncreaseMassFractionOfTitanInChugun>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.IncreaseMassFractionOfTitanInChugun" value=@Model.FurnanceCapacityCoefficents.IncreaseMassFractionOfTitanInChugun>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td colspan="3" scope="row">Увеличение влажности дутья на 1 г/м<sup>3</sup> (без увеличения температуры дутья)</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.IncreaseBlastHumidity" value=@Model.CokeCunsumptionCoefficents.IncreaseBlastHumidity>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.IncreaseBlastHumidity" value=@Model.FurnanceCapacityCoefficents.IncreaseBlastHumidity>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td colspan="3" scope="row">Увеличение расхода природного газа на 1 м<sup>3</sup>/т</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.IncreaseNaturalGasCunsimption" value=@Model.CokeCunsumptionCoefficents.IncreaseNaturalGasCunsimption>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.IncreaseNaturalGasCunsimption" value=@Model.FurnanceCapacityCoefficents.IncreaseNaturalGasCunsimption>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td colspan="3" scope="row">Вывод из шихты 10 кг/т известняка</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.OutputFromLimestoneCharge" value=@Model.CokeCunsumptionCoefficents.OutputFromLimestoneCharge>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.OutputFromLimestoneCharge" value=@Model.FurnanceCapacityCoefficents.OutputFromLimestoneCharge>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td colspan="3" scope="row">Увеличение объемной доли кислорода в дутье на 1 %</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.IncreaseVolumeFractionOxygenInBlast" value=@Model.CokeCunsumptionCoefficents.IncreaseVolumeFractionOxygenInBlast>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.IncreaseVolumeFractionOxygenInBlast" value=@Model.FurnanceCapacityCoefficents.IncreaseVolumeFractionOxygenInBlast>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td colspan="3" scope="row">Снижение массовой доли мелочи (фракции 0-5 мм) в рудной сыпи на 1 %</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.ReductionMassFractionTrifles" value=@Model.CokeCunsumptionCoefficents.ReductionMassFractionTrifles>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.ReductionMassFractionTrifles" value=@Model.FurnanceCapacityCoefficents.ReductionMassFractionTrifles>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td colspan="3" scope="row">Уменьшение массовой доли золы в коксе в пределах:</td>
+                </tr>
+                <tr class="table__row">
+                    <td class="text-right" colspan="3" scope="row">11...12 %</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.ReductionMassFractionAshInCokeInRangeOf11to12Percent" value=@Model.CokeCunsumptionCoefficents.ReductionMassFractionAshInCokeInRangeOf11to12Percent>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.ReductionMassFractionAshInCokeInRangeOf11to12Percent" value=@Model.FurnanceCapacityCoefficents.ReductionMassFractionAshInCokeInRangeOf11to12Percent>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td class="text-right" colspan="3" scope="row">12...13 %</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.ReductionMassFractionAshInCokeInRangeOf12to13Percent" value=@Model.CokeCunsumptionCoefficents.ReductionMassFractionAshInCokeInRangeOf12to13Percent>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.ReductionMassFractionAshInCokeInRangeOf12to13Percent" value=@Model.FurnanceCapacityCoefficents.ReductionMassFractionAshInCokeInRangeOf12to13Percent>
+                    </td>
+                </tr>
+                <tr class="table__row">
+                    <td colspan="3" scope="row">Уменьшение массовой доли серы в коксе на 0,1 %</td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="CokeCunsumptionCoefficents.ReductionMassFractionOfSera" value=@Model.CokeCunsumptionCoefficents.ReductionMassFractionOfSera>
+                    </td>
+                    <td>
+                        <input type="text" class="form-reference__input" name="FurnanceCapacityCoefficents.ReductionMassFractionOfSera" value=@Model.FurnanceCapacityCoefficents.ReductionMassFractionOfSera>
+                    </td>
+                </tr>
+            </table>
+            <button id="submitButton" class="form__submit" type="submit">Сохранить</button>
+        </form>
+    </div>
+</section>

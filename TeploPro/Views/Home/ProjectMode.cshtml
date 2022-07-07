@@ -1,0 +1,179 @@
+﻿@model TeploPro.Models.HomeViewModels.ProjectViewModel
+@{
+    ViewData["Title"] = "Проектный режим";
+}
+
+<section class="project">
+    <div class="container">
+        <div class="project__head head-content">
+            <h2 class="project__heading title">Проектный режим</h2>
+            <a class="main__back" asp-area="" asp-controller="Home" asp-action="Index">Назад</a>
+        </div>
+        <div class="project__select">
+            @if (ViewBag.Inputs.Count != 0)
+            {
+                <p class="project__select-heading">Выберите вариант исходных данных для базового периода</p>
+                <select class="project__select-list">
+                    <option value="0">Выберите вариант</option>
+                    @foreach (var item in ViewBag.Inputs)
+                    {
+                        <option value="@item.Id">Вариант №@item.Id от @item.DateOfResult</option>
+                    }
+                </select>
+            }
+            else
+            {
+                <p class="project__select-heading">Для осуществления проектного режима необходимо сохранить вариант исходных данных</p>
+            }
+        </div>
+        <form action="/Home/ProjectMode" method="post" class="form project__form form-project" style="display: none">
+            @* Hidden *@
+            <input id="inputDataId" name="inputDataId" type="text" hidden>
+            <div class="form-project__content">
+                <table id="resultTable" class="result-table" style="width: 65%; margin: 0 auto 30px auto;">
+                    <tr id="thead">
+                        <th colspan="3">Параметр</th>
+                        <th scope="col">Значение базовый</th>
+                        <th scope="col">Значение проектный</th>
+                        <th scope="col">Ед. изм.</th>
+                    </tr>
+                    @* Параметры дутья *@
+                    <tr>
+                        <td colspan="3" scope="row"><em>Параметры дутья*</em></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" scope="row" class="result-table-parameters">Температура</td>
+                        <td class="base-blast-temperature">
+                            <input class="form__input-base" name="Input.BlastTemperature" type="text" readonly>
+                        </td>
+                        <td class="project-blast-temperature">
+                            <input class="form__input" name="Project.BlastTemperature" type="text" value=@Model.Project.BlastTemperature>
+                            <div class="project-blast-temperature-max">Максимальное значение <span class="value"></span> ºС</div>
+                        </td>
+                        <td>°С</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" scope="row" class="result-table-parameters">Влажность</td>
+                        <td class="base-blast-humidity">
+                            <input class="form__input-base" name="Input.BlastHumidity" type="text" readonly>
+                        </td>
+                        <td>
+                            <input class="form__input" name="Project.BlastHumidity" type="text" value=@Model.Project.BlastHumidity>
+                        </td>
+                        <td>г/м<sup>3</sup></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" scope="row" class="result-table-parameters">Содержание кислорода</td>
+                        <td class="base-oxyden-blast-content">
+                            <input class="form__input-base" name="Input.OxygenContentInBlast" type="text" readonly>
+                        </td>
+                        <td>
+                            <input class="form__input" name="Project.OxygenContentInBlast" type="text" value=@Model.Project.OxygenContentInBlast>
+                        </td>
+                        <td>%</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" scope="row" class="result-table-parameters">Расход природного газа</td>
+                        <td class="base-natural-gas-consumption">
+                            <input class="form__input-base" name="Input.NaturalGasConsumption" type="text" readonly>
+                        </td>
+                        <td>
+                            <input class="form__input" name="Project.NaturalGasConsumption" type="text" value=@Model.Project.NaturalGasConsumption>
+                        </td>
+                        <td>м<sup>3</sup>/т чугуна</td>
+                    </tr>
+                    @* Параметры колошникового газа *@
+                    <tr>
+                        <td colspan="3" scope="row"><em>Параметры колошникового газа</em></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" scope="row" class="result-table-parameters">Давление</td>
+                        <td class="base-colosh-gas-pressure">
+                            <input class="form__input-base" name="Input.ColoshGasPressure" type="text" readonly>
+                        </td>
+                        <td>
+                            <input class="form__input" name="Project.ColoshGasPressure" type="text" value=@Model.Project.ColoshGasPressure>
+                        </td>
+                        <td>ати</td>
+                    </tr>
+                    @* Состав чугуна *@
+                    <tr>
+                        <td colspan="3" scope="row"><em>Состав чугуна</em></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" scope="row" class="result-table-parameters">Si</td>
+                        <td class="base-chugun-si">
+                            <input class="form__input-base" name="Input.Chugun_SI" type="text" readonly>
+                        </td>
+                        <td>
+                            <input class="form__input" name="Project.Chugun_SI" type="text" value=@Model.Project.Chugun_SI>
+                        </td>
+                        <td>%</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" scope="row" class="result-table-parameters">Mn</td>
+                        <td class="base-chugun-mn">
+                            <input class="form__input-base" name="Input.Chugun_MN" type="text" readonly>
+                        </td>
+                        <td>
+                            <input class="form__input" name="Project.Chugun_MN" type="text" value=@Model.Project.Chugun_MN>
+                        </td>
+                        <td>%</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" scope="row" class="result-table-parameters">P</td>
+                        <td class="base-chugun-p">
+                            <input class="form__input-base" name="Input.Chugun_P" type="text" readonly>
+                        </td>
+                        <td>
+                            <input class="form__input" name="Project.Chugun_P" type="text" value=@Model.Project.Chugun_P>
+                        </td>
+                        <td>%</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" scope="row" class="result-table-parameters">S</td>
+                        <td class="base-chugun-s">
+                            <input class="form__input-base" name="Input.Chugun_S" type="text" readonly>
+                        </td>
+                        <td>
+                            <input class="form__input" name="Project.Chugun_S" type="text" value=@Model.Project.Chugun_S>
+                        </td>
+                        <td>%</td>
+                    </tr>
+                    @*<tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">C</td>
+                    <td>
+                        <input class="form__input" name="Chugun_C" type="text" value=@Model.Chugun_C>
+                    </td>
+                    <td>%</td>
+                </tr>*@
+                    @* Состав кокса *@
+                    <tr>
+                        <td colspan="3" scope="row"><em>Состав кокса</em></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" scope="row" class="result-table-parameters">Содержание золы</td>
+                        <td class="base-ash-content-coke">
+                            <input class="form__input-base" name="Input.AshContentInCoke" type="text" readonly>
+                        </td>
+                        <td>
+                            <input class="form__input" name="Project.AshContentInCoke" type="text" value=@Model.Project.AshContentInCoke>
+                        </td>
+                        <td>%</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" scope="row" class="result-table-parameters">Содержание серы</td>
+                        <td class="base-sulfur-content-coke">
+                            <input class="form__input-base" name="Input.SulfurContentInCoke" type="text" readonly>
+                        </td>
+                        <td>
+                            <input class="form__input" name="Project.SulfurContentInCoke" type="text" value=@Model.Project.SulfurContentInCoke>
+                        </td>
+                        <td>%</td>
+                    </tr>
+                </table>
+            </div>
+            <button id="submitButton" class="form__submit" type="submit">Прогноз</button>
+        </form>
+    </div>
+</section>

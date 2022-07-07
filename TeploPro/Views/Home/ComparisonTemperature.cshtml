@@ -1,0 +1,358 @@
+﻿@model TeploPro.Models.HomeViewModels.ComparisonViewModel
+@{
+    ViewData["Title"] = "ComparisonTemperature";
+}
+
+<section class="comparison-main">
+    <div class="container">
+        <div class="comparison-main__head">
+            <h2 class="comparison-main__heading">Сопоставление параметров расчета теоретической температуры горения</h2>
+            <a class="comparison-main__back" asp-area="" asp-controller="Home" asp-action="ComparisonIndex">Назад</a>
+        </div>
+        <form action="/Home/ComparisonTemperature" method="post" class="comparison__form form">
+            <div class="form__content">
+                <div class="form__item">
+                    <label for="base-input">Базовый период</label>
+                    <select id="base-input" name="baseInputDataId" class="form__select-list" onChange="checkForOnly(this, 'base');">
+                        <option value="">Выберите вариант</option>
+                        @foreach (var item in ViewBag.InputsTemperature)
+                        {
+
+                            if (Model != null && item.Id == Model.BasePeriodData.Input.Id)
+                            {
+                                <option value="@item.Id" selected>Вариант от @item.DateOfResult</option>
+                            }
+                            else
+                            {
+                                <option value="@item.Id">Вариант от @item.DateOfResult</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form__item">
+                    <label for="comparative-input">Сравнительный период</label>
+                    <select id="comparative-input" name="comparativeInputDataId" class="form__select-list" onChange="checkForOnly(this, 'comp');">
+                        <option value="">Выберите вариант</option>
+                        @foreach (var item in ViewBag.InputsTemperature)
+                        {
+                            if (Model != null && item.Id == Model.СomparativePeriodData.Input.Id)
+                            {
+                                <option value="@item.Id" selected>Вариант от @item.DateOfResult</option>
+                            }
+                            else
+                            {
+                                <option value="@item.Id">Вариант от @item.DateOfResult</option>
+
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <button id="submitButton" class="form__submit" type="submit">Сравнить результаты</button>
+            <script>
+                let submitButton = document.getElementById("submitButton");
+                submitButton.disabled = true;
+                submitButton.classList.add("lock");
+                function checkForOnly(sel, selid) {
+                    let baseSelect = document.getElementById("base-input");
+                    let compSelect = document.getElementById("comparative-input");
+                    let selectText = sel.options[sel.selectedIndex].text;
+
+                    let baseSelectText = baseSelect.options[baseSelect.selectedIndex].text;
+                    let compSelectText = compSelect.options[compSelect.selectedIndex].text;
+
+                    let submitButton = document.getElementById("submitButton");
+
+                    if (selid == 'comp') {
+                        if (selectText == "Выберите вариант" || baseSelectText == "Выберите вариант") {
+                            submitButton.disabled = true;
+                            submitButton.classList.add("lock");
+                        } else {
+                            if (selectText == baseSelectText) {
+                                submitButton.disabled = true;
+                                submitButton.classList.add("lock");
+                                alert("Необходимо выбрать разные варианты");
+                            } else {
+                                submitButton.disabled = false;
+                                submitButton.classList.remove("lock");
+                            }
+                        }
+
+                    } else if (selid == 'base') {
+                        if (selectText == "Выберите вариант" || compSelectText == "Выберите вариант") {
+                            submitButton.disabled = true;
+                            submitButton.classList.add("lock");
+                        } else {
+                            if (selectText == compSelectText) {
+                                submitButton.disabled = true;
+                                submitButton.classList.add("lock");
+                                alert("Необходимо выбрать разные варианты");
+                            } else {
+                                submitButton.disabled = false;
+                                submitButton.classList.remove("lock");
+                            }
+                        }
+                    }
+                }
+            </script>
+        </form>
+
+        @if (Model != null)
+        {
+            <table id="resultTable" class="result-table">
+                @* ИСХОДНЫЕ ДАННЫЕ *@
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color: #ffd05b;">ИСХОДНЫЕ ДАННЫЕ</td>
+                </tr>
+                <tr id="thead">
+                    <th colspan="3">Параметр</th>
+                    <th scope="col">Значение (баз. период)</th>
+                    <th scope="col">Значение (срав. период)</th>
+                    <th scope="col">Отклонение (баз. - сравн.)</th>
+                    <th scope="col">Ед. изм.</th>
+                </tr>
+                @* Параметры дутья *@
+                <tr>
+                    <td colspan="3" scope="row"><em>Параметры дутья</em></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Содержание кислорода</td>
+                    <td>@Model.BasePeriodData.Input.OxygenContentInBlast</td>
+                    <td>@Model.СomparativePeriodData.Input.OxygenContentInBlast</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Input.OxygenContentInBlast - Model.СomparativePeriodData.Input.OxygenContentInBlast), 4)</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Температура</td>
+                    <td>@Model.BasePeriodData.Input.BlastTemperature</td>
+                    <td>@Model.СomparativePeriodData.Input.BlastTemperature</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Input.BlastTemperature - Model.СomparativePeriodData.Input.BlastTemperature), 4)</td>
+                    <td>°С</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Влажность</td>
+                    <td>@Model.BasePeriodData.Input.BlastHumidity</td>
+                    <td>@Model.СomparativePeriodData.Input.BlastHumidity</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Input.BlastHumidity - Model.СomparativePeriodData.Input.BlastHumidity), 4)</td>
+                    <td>г/м<sup>3</sup></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Количество углерода, сгорающего у фурм</td>
+                    <td>@Model.BasePeriodData.Result.AmountOfCarbonOfCokeBurningAtTuyeres</td>
+                    <td>@Model.СomparativePeriodData.Result.AmountOfCarbonOfCokeBurningAtTuyeres</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Result.AmountOfCarbonOfCokeBurningAtTuyeres - Model.СomparativePeriodData.Result.AmountOfCarbonOfCokeBurningAtTuyeres), 4)</td>
+                    <td>м<sup>3</sup>/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Расход природного газа</td>
+                    <td>@Model.BasePeriodData.Input.NaturalGasConsumption</td>
+                    <td>@Model.СomparativePeriodData.Input.NaturalGasConsumption</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Input.NaturalGasConsumption - Model.СomparativePeriodData.Input.NaturalGasConsumption), 4)</td>
+                    <td>м<sup>3</sup>/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Теплота горения природного газа на фурмах</td>
+                    <td>@Model.BasePeriodData.Input.HeatOfBurningOfNaturalGasOnFarms</td>
+                    <td>@Model.СomparativePeriodData.Input.HeatOfBurningOfNaturalGasOnFarms</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Input.HeatOfBurningOfNaturalGasOnFarms - Model.СomparativePeriodData.Input.HeatOfBurningOfNaturalGasOnFarms), 4)</td>
+                    <td>м<sup>3</sup>/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Теплота неполного горения углерода кокса</td>
+                    <td>@Model.BasePeriodData.Input.HeatOfIncompleteBurningCarbonOfCoke</td>
+                    <td>@Model.СomparativePeriodData.Input.HeatOfIncompleteBurningCarbonOfCoke</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Input.HeatOfIncompleteBurningCarbonOfCoke - Model.СomparativePeriodData.Input.HeatOfIncompleteBurningCarbonOfCoke), 4)</td>
+                    <td>м<sup>3</sup>/т чугуна</td>
+                </tr>
+                @* РЕЗУЛЬТАТЫ РАСЧЕТА *@
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color: aquamarine;">РЕЗУЛЬТАТЫ РАСЧЕТА</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход дутья, необходимый для сжигания 1 кг углерода кокса</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.BlastConsumptionRequiredForBurningOneKgOfCarbonCoke, 4)</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.BlastConsumptionRequiredForBurningOneKgOfCarbonCoke, 4)</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Result.BlastConsumptionRequiredForBurningOneKgOfCarbonCoke - Model.СomparativePeriodData.Result.BlastConsumptionRequiredForBurningOneKgOfCarbonCoke), 4)</td>
+                    <td>м<sup>3</sup>/кг</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход дутья, необходимый для конверсии 1 м<sup>3</sup> природного газа</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.BlastConsumptionForConversionOfOneMeterCoubOfNaturalGas, 4)</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.BlastConsumptionForConversionOfOneMeterCoubOfNaturalGas, 4)</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Result.BlastConsumptionForConversionOfOneMeterCoubOfNaturalGas - Model.СomparativePeriodData.Result.BlastConsumptionForConversionOfOneMeterCoubOfNaturalGas), 4)</td>
+                    <td>м<sup>3</sup>/м<sup>3</sup></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Выход фурменного газа в расчёте на 1 кг углерода кокса, сгорающего у фурм</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.OutputOfTheTuyereGasBurningAtTheTuyeres, 4)</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.OutputOfTheTuyereGasBurningAtTheTuyeres, 4)</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Result.OutputOfTheTuyereGasBurningAtTheTuyeres - Model.СomparativePeriodData.Result.OutputOfTheTuyereGasBurningAtTheTuyeres), 4)</td>
+                    <td>м<sup>3</sup>/кг</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Выход фурменного газа из 1 м<sup>3</sup> природного газа при его конверсии в фурменном очаге</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.OutputOfTuyereGasOfNaturalGasDuringСonversion, 4)</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.OutputOfTuyereGasOfNaturalGasDuringСonversion, 4)</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Result.OutputOfTuyereGasOfNaturalGasDuringСonversion - Model.СomparativePeriodData.Result.OutputOfTuyereGasOfNaturalGasDuringСonversion), 4)</td>
+                    <td>м<sup>3</sup>/м<sup>3</sup></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплоёмкость двухатомных газов при температуре горячего дутья</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.HeatCapacityOfDiatomicGasesAtHotBlastTemperature, 4)</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.HeatCapacityOfDiatomicGasesAtHotBlastTemperature, 4)</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Result.HeatCapacityOfDiatomicGasesAtHotBlastTemperature - Model.СomparativePeriodData.Result.HeatCapacityOfDiatomicGasesAtHotBlastTemperature), 4)</td>
+                    <td>кДж/(м<sup>3</sup> &#x2219 К)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплоёмкость паров воды при температуре горячего дутья</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.HeatCapacityOfWaterVaporAtHotBlastTemperature, 4)</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.HeatCapacityOfWaterVaporAtHotBlastTemperature, 4)</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Result.HeatCapacityOfWaterVaporAtHotBlastTemperature - Model.СomparativePeriodData.Result.HeatCapacityOfWaterVaporAtHotBlastTemperature), 4)</td>
+                    <td>кДж/(м<sup>3</sup> &#x2219 К)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплосодержание горячего дутья за вычетом теплоты разложения влаги дутья</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.HeatContentOfHotBlast, 4)</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.HeatContentOfHotBlast, 4)</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Result.HeatContentOfHotBlast - Model.СomparativePeriodData.Result.HeatContentOfHotBlast), 4)</td>
+                    <td>кДж/м<sup>3</sup></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплосодержание углерода кокса пришедшего к фурмам</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.HeatContentOfCarbonOfCokeToTuyeres, 4)</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.HeatContentOfCarbonOfCokeToTuyeres, 4)</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Result.HeatContentOfCarbonOfCokeToTuyeres - Model.СomparativePeriodData.Result.HeatContentOfCarbonOfCokeToTuyeres), 4)</td>
+                    <td>кДж/кг</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Степень прямого восстановления</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.DegreeOfDirectRecovery, 4)</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.DegreeOfDirectRecovery, 4)</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Result.DegreeOfDirectRecovery - Model.СomparativePeriodData.Result.DegreeOfDirectRecovery), 4)</td>
+                    <td>доли ед.</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Количество пришедшего в печь углерода кокса</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.AmountOfCokeCarbonCameIntoFurnace, 4)</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.AmountOfCokeCarbonCameIntoFurnace, 4)</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Result.AmountOfCokeCarbonCameIntoFurnace - Model.СomparativePeriodData.Result.AmountOfCokeCarbonCameIntoFurnace), 4)</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход углерода на прямое восстановление железа</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.CarbonConsumptionForIronReduction, 4)</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.CarbonConsumptionForIronReduction, 4)</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Result.CarbonConsumptionForIronReduction - Model.СomparativePeriodData.Result.CarbonConsumptionForIronReduction), 4)</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход углерода на восстановление примесей чугуна</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.CarbonСonsumptionForCastChugunReduction, 4)</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.CarbonСonsumptionForCastChugunReduction, 4)</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Result.CarbonСonsumptionForCastChugunReduction - Model.СomparativePeriodData.Result.CarbonСonsumptionForCastChugunReduction), 4)</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход углерода на образование метана</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.CarbonConsumptionForMethaneFormation, 4)</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.CarbonConsumptionForMethaneFormation, 4)</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Result.CarbonConsumptionForMethaneFormation - Model.СomparativePeriodData.Result.CarbonConsumptionForMethaneFormation), 4)</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход природного газа в расчете на 1 кг кокса, приходящего к фурмам</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.NaturalGasConsumptionPerOneKgOfCoke, 4)</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.NaturalGasConsumptionPerOneKgOfCoke, 4)</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Result.NaturalGasConsumptionPerOneKgOfCoke - Model.СomparativePeriodData.Result.NaturalGasConsumptionPerOneKgOfCoke), 4)</td>
+                    <td>м<sup>3</sup>/кг</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплосодержание горновых газов</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.HeatContentOfFurnaceGases, 4)</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.HeatContentOfFurnaceGases, 4)</td>
+                    <td>@Math.Round(Math.Abs(Model.BasePeriodData.Result.HeatContentOfFurnaceGases - Model.СomparativePeriodData.Result.HeatContentOfFurnaceGases), 4)</td>
+                    <td>кДж/м<sup>3</sup></td>
+                </tr>
+                <tr>
+                    <td style="background-color: aquamarine;" colspan="3" scope="row"><b>Теоретическая температура горения</b></td>
+                    <td style="background-color: aquamarine;">@Math.Round(Model.BasePeriodData.Result.TheoreticalBurningTemperatureOfCarbonCoke, 4)</td>
+                    <td style="background-color: aquamarine;">@Math.Round(Model.СomparativePeriodData.Result.TheoreticalBurningTemperatureOfCarbonCoke, 4)</td>
+                    <td style="background-color: aquamarine;">@Math.Round(Math.Abs(Model.BasePeriodData.Result.TheoreticalBurningTemperatureOfCarbonCoke - Model.СomparativePeriodData.Result.TheoreticalBurningTemperatureOfCarbonCoke), 4)</td>
+                    <td style="background-color: aquamarine;">°С</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align: center;">ДАТА ПРОВЕДЕНИЯ РАСЧЕТА</td>
+                    <td colspan="1" style="text-align: center;">@Model.BasePeriodData.Input.DateOfResult</td>
+                    <td colspan="1" style="text-align: center;">@Model.СomparativePeriodData.Input.DateOfResult</td>
+                </tr>
+            </table>
+            <p class="result-main__description">Практикой работы доменного цеха ОАО "Чусовской металлургический завод" и печей ОАО "НТМК", выплавляющих ванадиевый чугун, установлено, что нормальному режиму работы печей соответствует уровень теоретических температур горения 1950-2100°С</p>
+            <div class="result-main__chart-heading">Графическое сопоставления теоретической температуры горения<br /> в базовом и сравнительном периоде</div>
+            <div class="result-main__chart">
+                <canvas id="myChart"></canvas>
+                <script>
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Базовый', 'Сравнительный'],
+                        datasets: [{
+                            label: 'test',
+                            data: [@ViewBag.baseData, @ViewBag.compData],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: "Теоретическая температура горения, °С",
+                                    font: {
+                                        size: 14,
+                                        weight: 800
+                                    }
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: "Периоды",
+                                    font: {
+                                        size: 14,
+                                        weight: 800
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                </script>
+            </div>
+        }
+    </div>
+</section>

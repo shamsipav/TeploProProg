@@ -1,0 +1,118 @@
+﻿@model InputTemperatureModel
+@{
+    ViewData["Title"] = "Temperature";
+}
+
+@* Не забыть про asp-for для серверной валидации, помимо JavaScript *@
+
+<section class="index-calculation temperature">
+    <div class="container">
+        <div class="temperature-main__head">
+            <h2 class="temperature-main__heading">Расчёт теоретической температуры горения углерода кокса</h2>
+            @*<a class="result-main__back" asp-area="" asp-controller="Home" asp-action="Index">Назад</a>*@
+        </div>
+        @if (ViewData["Variant"] != null)
+        {
+            <div class="index-calculation__head">
+                <h2 class="index-calculation__heading">Загружен вариант исходных данных №@ViewData["Variant"] [@ViewData["VariantDateTime"]]</h2>
+                <a class="index-calculation__back" href="../Temperature">Сбросить</a>
+            </div>
+        }
+        else
+        {
+            <div class="index-calculation__head">
+                <h2 class="index-calculation__heading">Загружен вариант исходных данных по умолчанию</h2>
+            </div>
+        }
+        <form action="/Home/Temperature" id="inputForm" method="post" class="index-calculation__form">
+            <table id="resultTable" class="result-table" style="width: 65%; margin: 0 auto 30px auto;">
+                <tr>
+                    <th colspan="3">Параметр</th>
+                    <th scope="col" style="width: 15%;">Значение</th>
+                    <th scope="col">Ед. изм.</th>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Содержание кислорода в дутье</td>
+                    <td>
+                        <input class="form__input" name="OxygenContentInTheBlast" type="text" value=@Model.OxygenContentInTheBlast>
+                    </td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Температура горячего дутья</td>
+                    <td>
+                        <input class="form__input" name="HotBlastTemperature" type="text" value=@Model.HotBlastTemperature>
+                    </td>
+                    <td>°C</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Содержание влаги в дутье</td>
+                    <td>
+                        <input class="form__input" name="MoistureContentInTheBlast" type="text" value=@Model.MoistureContentInTheBlast>
+                    </td>
+                    <td>г/м<sup>3</sup></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Количество углерода, сгорающего у фурм</td>
+                    <td>
+                        <input class="form__input" name="AmountOfCarbonBurnedAtTheTuyeres" type="text" value=@Model.AmountOfCarbonBurnedAtTheTuyeres>
+                    </td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход природного газа</td>
+                    <td>
+                        <input class="form__input" name="NaturalGasConsumption" type="text" value=@Model.NaturalGasConsumption>
+                    </td>
+                    <td>м<sup>3</sup>/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплота горения природного газа на фурмах</td>
+                    <td>
+                        <input class="form__input" name="HeatOfBurningOfNaturalGasOnFarms" type="text" value=@Model.HeatOfBurningOfNaturalGasOnFarms>
+                    </td>
+                    <td>кДж/м3</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплота неполного горения углерода кокса</td>
+                    <td>
+                        <input class="form__input" name="HeatOfIncompleteBurningCarbonOfCoke" type="text" value=@Model.HeatOfIncompleteBurningCarbonOfCoke>
+                    </td>
+                    <td>кДж/кг</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплоёмкость кокса</td>
+                    <td>
+                        <input class="form__input" name="HeatCapacityOfCoke" type="text" value=@Model.HeatCapacityOfCoke>
+                    </td>
+                    <td>кДж/(кг &#x2219 К)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Температура кокса, пришедшего к фурмам</td>
+                    <td>
+                        <input class="form__input" name="TemperatureOfCokeThatCameToTuyeres" type="text" value=@Model.TemperatureOfCokeThatCameToTuyeres>
+                    </td>
+                    <td>°C</td>
+                </tr>
+            </table>
+            @if (ViewData["Variant"] != null)
+            {
+                <input class="form__input" name="inputId" type="number" value=@ViewData["Variant"] hidden>
+            }
+            @if (!ViewBag.IsSavedInputData)
+            {
+                <div class="checkbox-content">
+                    <input id="checkbox-save" type="checkbox" name="isSaveInputs" value="true" checked>
+                    <label for="checkbox-save">Сохранить вариант расчёта</label>
+                </div>
+                <button id="submitButton" class="form__submit" type="submit">Отправить</button>
+            }
+            else
+            {
+                <button id="submitButton" class="form__submit" type="submit">Показать результат</button>
+            }
+        </form>
+    </div>
+</section>
+
+

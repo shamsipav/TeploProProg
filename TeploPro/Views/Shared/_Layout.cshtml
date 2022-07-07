@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TeploPro</title>
+    <link rel="stylesheet" href="~/css/ui.css" />
+    <link rel="stylesheet" href="~/css/custom-style.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/script-header.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header id="header" class="header">
+        <div class="container">
+            <div class="header__content">
+                <a class="header__logo" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/img/teplopro-logo.svg" alt="Alternate Text" />
+                    <span class="header__logo-text">TeploPro</span>
+                </a>
+            </div>
+            @*<nav class="navigation">
+                <ul>
+                    <li><a class="navigation__link" asp-area="" asp-controller="Home" asp-action="ProjectMode">Проектный режим</a></li>
+                    <li><a class="navigation__link" asp-area="" asp-controller="Home" asp-action="CoefficientsReference">Справочник</a></li>
+                    <li><a class="navigation__link" asp-area="" asp-controller="Home" asp-action="ComparisonIndex">Сопоставление</a></li>
+                    <li><a class="navigation__link" asp-area="" asp-controller="Home" asp-action="Inputs">Варианты исходных данных</a></li>
+                    <li><button class="navigation__link result-table-export">Экспорт в Excel</button></li>
+                </ul>
+            </nav>*@
+            <nav class="navigation">
+                <ul>
+                    <li><a class="navigation__link" asp-area="" asp-controller="Home" asp-action="ProjectMode">Проектный режим</a></li>
+                    <li><a class="navigation__link" asp-area="" asp-controller="Home" asp-action="CoefficientsReference">Справочник</a></li>
+                    <li><a class="navigation__link" asp-area="" asp-controller="Home" asp-action="Comparison">Сопоставление</a></li>
+                    <li><a class="navigation__link" asp-area="" asp-controller="Home" asp-action="Inputs">Варианты исходных данных</a></li>
+                    <li><button class="navigation__link result-table-export">Экспорт в Excel</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="main">
+        @RenderBody()
+    </main>
+
+    <div id="loader">Загрузка данных...</div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">Copyright &copy; 2022 | TeploPro by Pavel Shamsimukhametov</div>
+        </div>
+    </footer>
+
+    <script src="~/js/jquery-numeric.js"></script>
+    <script src="~/js/inputmask.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

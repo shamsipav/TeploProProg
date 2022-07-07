@@ -1,0 +1,17 @@
+﻿@model TeploPro.Models.HomeViewModels.ComparisonViewModel
+@{
+    ViewData["Title"] = "Сопоставление";
+}
+
+<section class="comparison-main">
+    <div class="container">
+        <div class="comparison-main__head">
+            <h2 class="comparison-main__heading">Сопоставление показателей теплового состояния доменной плавки</h2>
+            <a class="comparison-main__back" asp-area="" asp-controller="Home" asp-action="Index">Назад</a>
+        </div>
+        <div class="comparison-main__content">
+            <a class="comparison-main__link" asp-area="" asp-controller="Home" asp-action="Comparison">Индексы верха и низа доменной плавки</a>
+            <a class="comparison-main__link" asp-area="" asp-controller="Home" asp-action="ComparisonTemperature">Теоретическая температура горения углерода кокса</a>
+        </div>
+    </div>
+</section>

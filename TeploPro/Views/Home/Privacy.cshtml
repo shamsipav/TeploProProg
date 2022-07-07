@@ -1,0 +1,902 @@
+﻿@model TeploPro.Models.HomeViewModels.ComparisonViewModel
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
+
+<section class="comparison-main">
+    <div class="container">
+        <div class="comparison-main__head">
+            <h2 class="comparison-main-heading">Сопоставление показателей теплового состояния доменной плавки</h2>
+            <a class="comparison-main__back" asp-area="" asp-controller="Home" asp-action="Index">Назад</a>
+        </div>
+        <div class="comparison-main-content">
+            <table id="resultTable" class="result-table">
+                @* ИСХОДНЫЕ ДАННЫЕ *@
+                <tr>
+                    <td colspan="5" style="text-align: center; background-color: #ffd05b;">ИСХОДНЫЕ ДАННЫЕ</td>
+                </tr>
+                <tr>
+                    <th colspan="3">Параметр</th>
+                    <th scope="col">Значение</th>
+                    <th scope="col">Ед. изм.</th>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Номер доменной печи</td>
+                    <td>@Model.BasePeriodData.Input.NumberOfFurnace</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Полезный объем печи</td>
+                    <td>@Model.BasePeriodData.Input.UsefulVolumeOfFurnace</td>
+                    <td>м<sup>3</sup></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Полезная высота печи</td>
+                    <td>@Model.BasePeriodData.Input.UsefulHeightOfFurnace</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Диаметр колошника</td>
+                    <td>@Model.BasePeriodData.Input.DiameterOfColoshnik</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Диаметр распара</td>
+                    <td>@Model.BasePeriodData.Input.DiameterOfRaspar</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Диаметр горна</td>
+                    <td>@Model.BasePeriodData.Input.DiameterOfHorn</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Выста горна</td>
+                    <td>@Model.BasePeriodData.Input.HeightOfHorn</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Выста фурм</td>
+                    <td>@Model.BasePeriodData.Input.HeightOfTuyeres</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Выста заплечников</td>
+                    <td>@Model.BasePeriodData.Input.HeightOfZaplechiks</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Выста распара</td>
+                    <td>@Model.BasePeriodData.Input.HeightOfRaspar</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Выста шахты</td>
+                    <td>@Model.BasePeriodData.Input.HeightOfShaft</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Выста колошника</td>
+                    <td>@Model.BasePeriodData.Input.HeightOfColoshnik</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Установленный уровень насыпи</td>
+                    <td>@Model.BasePeriodData.Input.EstablishedLevelOfEmbankment</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Число фурм</td>
+                    <td>@Model.BasePeriodData.Input.NumberOfTuyeres</td>
+                    <td>шт.</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Суточная производительность печи</td>
+                    <td>@Model.BasePeriodData.Input.DailyСapacityOfFurnace</td>
+                    <td>т чугуна/сут</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Удельный расход кокса</td>
+                    <td>@Model.BasePeriodData.Input.SpecificConsumptionOfCoke</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Удельный расход ЖРМ</td>
+                    <td>@Model.BasePeriodData.Input.SpecificConsumptionOfZRM</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Доля окатышей в шихте</td>
+                    <td>@Model.BasePeriodData.Input.ShareOfPelletsInCharge</td>
+                    <td>доли ед.</td>
+                </tr>
+                @* Параметры дутья *@
+                <tr>
+                    <td colspan="3" scope="row"><em>Параметры дутья</em></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Расход</td>
+                    <td>@Model.BasePeriodData.Input.BlastConsumption</td>
+                    <td>м<sup>3</sup>/мин</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Температура</td>
+                    <td>@Model.BasePeriodData.Input.BlastTemperature</td>
+                    <td>°С</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Давление</td>
+                    <td>@Model.BasePeriodData.Input.BlastPressure</td>
+                    <td>ати</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Влажность</td>
+                    <td>@Model.BasePeriodData.Input.BlastHumidity</td>
+                    <td>г/м<sup>3</sup></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Содержание кислорода</td>
+                    <td>@Model.BasePeriodData.Input.OxygenContentInBlast</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Расход природного газа</td>
+                    <td>@Model.BasePeriodData.Input.NaturalGasConsumption</td>
+                    <td>м<sup>3</sup>/т чугуна</td>
+                </tr>
+                @* Параметры колошникового газа *@
+                <tr>
+                    <td colspan="3" scope="row"><em>Параметры колошникового газа</em></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Температура</td>
+                    <td>@Model.BasePeriodData.Input.ColoshGasTemperature</td>
+                    <td>°С</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Давление</td>
+                    <td>@Model.BasePeriodData.Input.ColoshGasPressure</td>
+                    <td>ати</td>
+                </tr>
+                @* Состав колошникового газа *@
+                <tr>
+                    <td colspan="3" scope="row"><em>Состав колошникового газа</em></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">CO</td>
+                    <td>@Model.BasePeriodData.Input.ColoshGas_CO</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">CO<sub>2</sub></td>
+                    <td>@Model.BasePeriodData.Input.ColoshGas_CO2</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">H<sub>2</sub></td>
+                    <td>@Model.BasePeriodData.Input.ColoshGas_H2</td>
+                    <td>%</td>
+                </tr>
+                @* Состав чугуна *@
+                <tr>
+                    <td colspan="3" scope="row"><em>Состав чугуна</em></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Si</td>
+                    <td>@Model.BasePeriodData.Input.Chugun_SI</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Mn</td>
+                    <td>@Model.BasePeriodData.Input.Chugun_MN</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">P</td>
+                    <td>@Model.BasePeriodData.Input.Chugun_P</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">S</td>
+                    <td>@Model.BasePeriodData.Input.Chugun_S</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">C</td>
+                    <td>@Model.BasePeriodData.Input.Chugun_C</td>
+                    <td>%</td>
+                </tr>
+                @* Состав кокса *@
+                <tr>
+                    <td colspan="3" scope="row"><em>Состав кокса</em></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Содержание золы</td>
+                    <td>@Model.BasePeriodData.Input.AshContentInCoke</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Содержание летучих</td>
+                    <td>@Model.BasePeriodData.Input.VolatileContentInCoke</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Содержание серы</td>
+                    <td>@Model.BasePeriodData.Input.SulfurContentInCoke</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Удельный выход шлака (по данным тех. отчета)</td>
+                    <td>@Model.BasePeriodData.Input.SpecificSlagYield</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплоёмкость агломерата</td>
+                    <td>@Model.BasePeriodData.Input.HeatCapacityOfAgglomerate</td>
+                    <td>кДж/(кг &#x2219 °С)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплоёмкость окатышей</td>
+                    <td>@Model.BasePeriodData.Input.HeatCapacityOfPellets</td>
+                    <td>кДж/(кг &#x2219 °С)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплоёмкость кокса</td>
+                    <td>@Model.BasePeriodData.Input.HeatCapacityOfCoke</td>
+                    <td>кДж/(кг &#x2219 °С)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Принятое значение температуры резервной зоны</td>
+                    <td>@Model.BasePeriodData.Input.AcceptedTemperatureOfBackupZone</td>
+                    <td>°С</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Доля тепловых потерь через нижнюю часть печи</td>
+                    <td>@Model.BasePeriodData.Input.ProportionOfHeatLossesOfLowerPart</td>
+                    <td>доли ед.</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Средний размер куска шихты</td>
+                    <td>@Model.BasePeriodData.Input.AverageSizeOfPieceCharge</td>
+                    <td>м</td>
+                </tr>
+
+                @* РЕЗУЛЬТАТЫ РАСЧЕТА *@
+                <tr>
+                    <td colspan="5" style="text-align: center; background-color: aquamarine;">РЕЗУЛЬТАТЫ РАСЧЕТА</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Средняя площадь сечения шахты печи</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.AverageSectionalAreaOfFurnaceShaft, 4)</td>
+                    <td>м<sup>2</sup></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Скорость фильтрации газа через шахту печи</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.GasFiltrationFurnaceShaftSpeed, 4)</td>
+                    <td>м/c</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплоёмкость двухатомных газов при температуре дутья</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.HeatCapacityOfDiatomicGasesAtBlastTemperature, 4)</td>
+                    <td>кДж/(м<sup>3</sup> &#x2219 °С)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплоёмкость паров воды при температуре дутья</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.HeatCapacityOfWaterVaporAtBlastTemperature, 4)</td>
+                    <td>кДж/(м<sup>3</sup> &#x2219 °С)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Степень прямого восстановления</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.DegreeOfDirectRecovery, 4)</td>
+                    <td>доли ед.</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Количество пришедшего в печь углерода кокса</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.AmountOfCokeCarbonCameIntoFurnace, 4)</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход углерода на прямое восстановление железа</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.CarbonConsumptionForIronReduction, 4)</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход углерода на восстановление примесей чугуна</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.CarbonСonsumptionForCastChugunReduction, 4)</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход углерода на образование метана</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.CarbonConsumptionForMethaneFormation, 4)</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Количество углерода кокса, сгорающего у фурм (Сф)</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.AmountOfCarbonOfCokeBurningAtTuyeres, 4)</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход природного газа на 1 кг углерода кокса, сгорающего у фурм</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.ConsumptionOfNaturalGasPerOneKgOfCarbonOfCoke, 4)</td>
+                    <td>м<sup>3</sup>/кг &#x2219 Сф</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход дутья на 1 кг кокса, сгорающего у фурм</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.ConsumptionOfNaturalGasPerOneKgOfOfCoke, 4)</td>
+                    <td>м<sup>3</sup>/кг &#x2219 Сф</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход дутья на сжигание 1 м<sup>3</sup> природного газа</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.BlastConsumptionForBurningOneMeterCoubOfNaturalGas, 4)</td>
+                    <td> м<sup>3</sup>/м<sup>3</sup></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Удельный расход дутья</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.SpecificBlastConsumption, 4)</td>
+                    <td>м<sup>3</sup>/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Количество горновых газов при горении 1 кг углерода кокса, сгорающего у фурм</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.AmountOfGorenjeGasesDuringCombustionOneKgOfCarbonCoke, 4)</td>
+                    <td>м<sup>3</sup>/кг &#x2219 Сф</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Количество горновых газов при конверсии 1м<sup>3</sup> газа</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.NumberOfFurnaceGasesAtConversionOfOneMeterCoubOfGas, 4)</td>
+                    <td>м<sup>3</sup>/м<sup>3</sup></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Выход горнового газа</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.FurnaceGasOutput, 4)</td>
+                    <td>м<sup>3</sup>/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Количество тепла от горения кокса</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.AmountOfHeatFromGorenjeCoke, 4)</td>
+                    <td>кДж/кг чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Тепло нагретого дутья</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.HeatOfHeatedBlast, 4)</td>
+                    <td>кДж/кг чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Тепло конверсии природного газа</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.HeatOfNaturalGasConversion, 4)</td>
+                    <td>кДж/кг чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплоёмкость газа при температуре "резервной зоны</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.HeatCapacityOfGasAtTemperatureOfReserveZone, 4)</td>
+                    <td>кДж/(м<sup>3</sup> &#x2219 °С)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">"Полезный" приход тепла в нижнюю зону печи</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.UsefulArrivalOfHeatInLowerZoneOfTheFurnace, 4)</td>
+                    <td>кДж/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Количество тепла, поступающего в нижнюю зону печи с шихтой при температуре "резервной зоны"</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.AmountOfHeatEnteringLlowerZoneOfFurnaceWithCharge, 4)</td>
+                    <td>кДж/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Затраты тепла на прямое восстановление железа</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.HeatCostsForDirectIronRecovery, 4)</td>
+                    <td>кДж/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Тепловые потери в окружающюю среду через фурменный пояс, распар и заплечики</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.HeatLossesToEnvironmentThrough, 4)</td>
+                    <td>кДж/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расчетный обобщающий параметр</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.CalculatedGeneralizingParameter, 4)</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Оптимальные затраты тепла на выплавку 1 тонны чугуна</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.OptimalHeatConsumptionForSmeltingOneTonOfCastIron, 4)</td>
+                    <td>кДж/т чугуна</td>
+                </tr>
+                @* Индекс низа печи *@
+                <tr>
+                    <td colspan="3" scope="row"><b>Индекс низа печи</b></td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.IndexOfTheBottomOfTheFurnace, 4)</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Значение доли тепловых потерь в нижней зоне печи</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.ValueOfHeatLossesInLowerZoneOfFurnace, 4)</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Истинная теплоемкость колошникового газа</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.TrueHeatCapacityOfGrateGas, 4)</td>
+                    <td>кДж/(м<sup>3</sup> &#x2219 °С)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплопроводность колошникового газа</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.ThermalConductivityOfGrateGas, 4)</td>
+                    <td>Вт/(м &#x2219 °С)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Кинематическая вязкость колошникового газа</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.KinematicViscosityOfGrateGas)</td>
+                    <td>м<sup>2</sup>/с</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Объемный коэффициент теплообмена</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.VolumetricHeatTransferCoefficient, 4)</td>
+                    <td>кВт/(м<sup>3</sup> &#x2219 °С)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход шихты, проходящий через шахту печи</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.ChargeFlowRatePassingThroughFurnaceShaft, 4)</td>
+                    <td>кг/с</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Средняя теплоемкость шихты</td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.AverageHeatCapacityOfCharge, 4)</td>
+                    <td>кДж/(кг &#x2219 °С)</td>
+                </tr>
+                @* Индекс верха печи *@
+                <tr>
+                    <td colspan="3" scope="row"><b>Индекс верха печи</b></td>
+                    <td>@Math.Round(Model.BasePeriodData.Result.IndexOfTheFurnaceTop, 4)</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;">ДАТА ПРОВЕДЕНИЯ РАСЧЕТА</td>
+                    <td colspan="3" style="text-align: center;">@Model.BasePeriodData.Input.DateOfResult</td>
+                </tr>
+            </table>
+            <table id="resultTable" class="result-table">
+                @* ИСХОДНЫЕ ДАННЫЕ *@
+                <tr>
+                    <td colspan="5" style="text-align: center; background-color: #ffd05b;">ИСХОДНЫЕ ДАННЫЕ</td>
+                </tr>
+                <tr>
+                    <th colspan="3">Параметр</th>
+                    <th scope="col">Значение</th>
+                    <th scope="col">Ед. изм.</th>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Номер доменной печи</td>
+                    <td>@Model.СomparativePeriodData.Input.NumberOfFurnace</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Полезный объем печи</td>
+                    <td>@Model.СomparativePeriodData.Input.UsefulVolumeOfFurnace</td>
+                    <td>м<sup>3</sup></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Полезная высота печи</td>
+                    <td>@Model.СomparativePeriodData.Input.UsefulHeightOfFurnace</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Диаметр колошника</td>
+                    <td>@Model.СomparativePeriodData.Input.DiameterOfColoshnik</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Диаметр распара</td>
+                    <td>@Model.СomparativePeriodData.Input.DiameterOfRaspar</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Диаметр горна</td>
+                    <td>@Model.СomparativePeriodData.Input.DiameterOfHorn</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Выста горна</td>
+                    <td>@Model.СomparativePeriodData.Input.HeightOfHorn</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Выста фурм</td>
+                    <td>@Model.СomparativePeriodData.Input.HeightOfTuyeres</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Выста заплечников</td>
+                    <td>@Model.СomparativePeriodData.Input.HeightOfZaplechiks</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Выста распара</td>
+                    <td>@Model.СomparativePeriodData.Input.HeightOfRaspar</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Выста шахты</td>
+                    <td>@Model.СomparativePeriodData.Input.HeightOfShaft</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Выста колошника</td>
+                    <td>@Model.СomparativePeriodData.Input.HeightOfColoshnik</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Установленный уровень насыпи</td>
+                    <td>@Model.СomparativePeriodData.Input.EstablishedLevelOfEmbankment</td>
+                    <td>мм</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Число фурм</td>
+                    <td>@Model.СomparativePeriodData.Input.NumberOfTuyeres</td>
+                    <td>шт.</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Суточная производительность печи</td>
+                    <td>@Model.СomparativePeriodData.Input.DailyСapacityOfFurnace</td>
+                    <td>т чугуна/сут</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Удельный расход кокса</td>
+                    <td>@Model.СomparativePeriodData.Input.SpecificConsumptionOfCoke</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Удельный расход ЖРМ</td>
+                    <td>@Model.СomparativePeriodData.Input.SpecificConsumptionOfZRM</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Доля окатышей в шихте</td>
+                    <td>@Model.СomparativePeriodData.Input.ShareOfPelletsInCharge</td>
+                    <td>доли ед.</td>
+                </tr>
+                @* Параметры дутья *@
+                <tr>
+                    <td colspan="3" scope="row"><em>Параметры дутья</em></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Расход</td>
+                    <td>@Model.СomparativePeriodData.Input.BlastConsumption</td>
+                    <td>м<sup>3</sup>/мин</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Температура</td>
+                    <td>@Model.СomparativePeriodData.Input.BlastTemperature</td>
+                    <td>°С</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Давление</td>
+                    <td>@Model.СomparativePeriodData.Input.BlastPressure</td>
+                    <td>ати</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Влажность</td>
+                    <td>@Model.СomparativePeriodData.Input.BlastHumidity</td>
+                    <td>г/м<sup>3</sup></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Содержание кислорода</td>
+                    <td>@Model.СomparativePeriodData.Input.OxygenContentInBlast</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Расход природного газа</td>
+                    <td>@Model.СomparativePeriodData.Input.NaturalGasConsumption</td>
+                    <td>м<sup>3</sup>/т чугуна</td>
+                </tr>
+                @* Параметры колошникового газа *@
+                <tr>
+                    <td colspan="3" scope="row"><em>Параметры колошникового газа</em></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Температура</td>
+                    <td>@Model.СomparativePeriodData.Input.ColoshGasTemperature</td>
+                    <td>°С</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Давление</td>
+                    <td>@Model.СomparativePeriodData.Input.ColoshGasPressure</td>
+                    <td>ати</td>
+                </tr>
+                @* Состав колошникового газа *@
+                <tr>
+                    <td colspan="3" scope="row"><em>Состав колошникового газа</em></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">CO</td>
+                    <td>@Model.СomparativePeriodData.Input.ColoshGas_CO</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">CO<sub>2</sub></td>
+                    <td>@Model.СomparativePeriodData.Input.ColoshGas_CO2</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">H<sub>2</sub></td>
+                    <td>@Model.СomparativePeriodData.Input.ColoshGas_H2</td>
+                    <td>%</td>
+                </tr>
+                @* Состав чугуна *@
+                <tr>
+                    <td colspan="3" scope="row"><em>Состав чугуна</em></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Si</td>
+                    <td>@Model.СomparativePeriodData.Input.Chugun_SI</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Mn</td>
+                    <td>@Model.СomparativePeriodData.Input.Chugun_MN</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">P</td>
+                    <td>@Model.СomparativePeriodData.Input.Chugun_P</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">S</td>
+                    <td>@Model.СomparativePeriodData.Input.Chugun_S</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">C</td>
+                    <td>@Model.СomparativePeriodData.Input.Chugun_C</td>
+                    <td>%</td>
+                </tr>
+                @* Состав кокса *@
+                <tr>
+                    <td colspan="3" scope="row"><em>Состав кокса</em></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Содержание золы</td>
+                    <td>@Model.СomparativePeriodData.Input.AshContentInCoke</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Содержание летучих</td>
+                    <td>@Model.СomparativePeriodData.Input.VolatileContentInCoke</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row" class="result-table-parameters">Содержание серы</td>
+                    <td>@Model.СomparativePeriodData.Input.SulfurContentInCoke</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Удельный выход шлака (по данным тех. отчета)</td>
+                    <td>@Model.СomparativePeriodData.Input.SpecificSlagYield</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплоёмкость агломерата</td>
+                    <td>@Model.СomparativePeriodData.Input.HeatCapacityOfAgglomerate</td>
+                    <td>кДж/(кг &#x2219 °С)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплоёмкость окатышей</td>
+                    <td>@Model.СomparativePeriodData.Input.HeatCapacityOfPellets</td>
+                    <td>кДж/(кг &#x2219 °С)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплоёмкость кокса</td>
+                    <td>@Model.СomparativePeriodData.Input.HeatCapacityOfCoke</td>
+                    <td>кДж/(кг &#x2219 °С)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Принятое значение температуры резервной зоны</td>
+                    <td>@Model.СomparativePeriodData.Input.AcceptedTemperatureOfBackupZone</td>
+                    <td>°С</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Доля тепловых потерь через нижнюю часть печи</td>
+                    <td>@Model.СomparativePeriodData.Input.ProportionOfHeatLossesOfLowerPart</td>
+                    <td>доли ед.</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Средний размер куска шихты</td>
+                    <td>@Model.СomparativePeriodData.Input.AverageSizeOfPieceCharge</td>
+                    <td>м</td>
+                </tr>
+
+                @* РЕЗУЛЬТАТЫ РАСЧЕТА *@
+                <tr>
+                    <td colspan="5" style="text-align: center; background-color: aquamarine;">РЕЗУЛЬТАТЫ РАСЧЕТА</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Средняя площадь сечения шахты печи</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.AverageSectionalAreaOfFurnaceShaft, 4)</td>
+                    <td>м<sup>2</sup></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Скорость фильтрации газа через шахту печи</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.GasFiltrationFurnaceShaftSpeed, 4)</td>
+                    <td>м/c</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплоёмкость двухатомных газов при температуре дутья</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.HeatCapacityOfDiatomicGasesAtBlastTemperature, 4)</td>
+                    <td>кДж/(м<sup>3</sup> &#x2219 °С)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплоёмкость паров воды при температуре дутья</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.HeatCapacityOfWaterVaporAtBlastTemperature, 4)</td>
+                    <td>кДж/(м<sup>3</sup> &#x2219 °С)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Степень прямого восстановления</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.DegreeOfDirectRecovery, 4)</td>
+                    <td>доли ед.</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Количество пришедшего в печь углерода кокса</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.AmountOfCokeCarbonCameIntoFurnace, 4)</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход углерода на прямое восстановление железа</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.CarbonConsumptionForIronReduction, 4)</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход углерода на восстановление примесей чугуна</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.CarbonСonsumptionForCastChugunReduction, 4)</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход углерода на образование метана</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.CarbonConsumptionForMethaneFormation, 4)</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Количество углерода кокса, сгорающего у фурм (Сф)</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.AmountOfCarbonOfCokeBurningAtTuyeres, 4)</td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход природного газа на 1 кг углерода кокса, сгорающего у фурм</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.ConsumptionOfNaturalGasPerOneKgOfCarbonOfCoke, 4)</td>
+                    <td>м<sup>3</sup>/кг &#x2219 Сф</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход дутья на 1 кг кокса, сгорающего у фурм</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.ConsumptionOfNaturalGasPerOneKgOfOfCoke, 4)</td>
+                    <td>м<sup>3</sup>/кг &#x2219 Сф</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход дутья на сжигание 1 м<sup>3</sup> природного газа</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.BlastConsumptionForBurningOneMeterCoubOfNaturalGas, 4)</td>
+                    <td> м<sup>3</sup>/м<sup>3</sup></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Удельный расход дутья</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.SpecificBlastConsumption, 4)</td>
+                    <td>м<sup>3</sup>/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Количество горновых газов при горении 1 кг углерода кокса, сгорающего у фурм</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.AmountOfGorenjeGasesDuringCombustionOneKgOfCarbonCoke, 4)</td>
+                    <td>м<sup>3</sup>/кг &#x2219 Сф</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Количество горновых газов при конверсии 1м<sup>3</sup> газа</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.NumberOfFurnaceGasesAtConversionOfOneMeterCoubOfGas, 4)</td>
+                    <td>м<sup>3</sup>/м<sup>3</sup></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Выход горнового газа</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.FurnaceGasOutput, 4)</td>
+                    <td>м<sup>3</sup>/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Количество тепла от горения кокса</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.AmountOfHeatFromGorenjeCoke, 4)</td>
+                    <td>кДж/кг чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Тепло нагретого дутья</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.HeatOfHeatedBlast, 4)</td>
+                    <td>кДж/кг чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Тепло конверсии природного газа</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.HeatOfNaturalGasConversion, 4)</td>
+                    <td>кДж/кг чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплоёмкость газа при температуре "резервной зоны</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.HeatCapacityOfGasAtTemperatureOfReserveZone, 4)</td>
+                    <td>кДж/(м<sup>3</sup> &#x2219 °С)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">"Полезный" приход тепла в нижнюю зону печи</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.UsefulArrivalOfHeatInLowerZoneOfTheFurnace, 4)</td>
+                    <td>кДж/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Количество тепла, поступающего в нижнюю зону печи с шихтой при температуре "резервной зоны"</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.AmountOfHeatEnteringLlowerZoneOfFurnaceWithCharge, 4)</td>
+                    <td>кДж/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Затраты тепла на прямое восстановление железа</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.HeatCostsForDirectIronRecovery, 4)</td>
+                    <td>кДж/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Тепловые потери в окружающюю среду через фурменный пояс, распар и заплечики</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.HeatLossesToEnvironmentThrough, 4)</td>
+                    <td>кДж/т чугуна</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расчетный обобщающий параметр</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.CalculatedGeneralizingParameter, 4)</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Оптимальные затраты тепла на выплавку 1 тонны чугуна</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.OptimalHeatConsumptionForSmeltingOneTonOfCastIron, 4)</td>
+                    <td>кДж/т чугуна</td>
+                </tr>
+                @* Индекс низа печи *@
+                <tr>
+                    <td colspan="3" scope="row"><b>Индекс низа печи</b></td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.IndexOfTheBottomOfTheFurnace, 4)</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Значение доли тепловых потерь в нижней зоне печи</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.ValueOfHeatLossesInLowerZoneOfFurnace, 4)</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Истинная теплоемкость колошникового газа</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.TrueHeatCapacityOfGrateGas, 4)</td>
+                    <td>кДж/(м<sup>3</sup> &#x2219 °С)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Теплопроводность колошникового газа</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.ThermalConductivityOfGrateGas, 4)</td>
+                    <td>Вт/(м &#x2219 °С)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Кинематическая вязкость колошникового газа</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.KinematicViscosityOfGrateGas)</td>
+                    <td>м<sup>2</sup>/с</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Объемный коэффициент теплообмена</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.VolumetricHeatTransferCoefficient, 4)</td>
+                    <td>кВт/(м<sup>3</sup> &#x2219 °С)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Расход шихты, проходящий через шахту печи</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.ChargeFlowRatePassingThroughFurnaceShaft, 4)</td>
+                    <td>кг/с</td>
+                </tr>
+                <tr>
+                    <td colspan="3" scope="row">Средняя теплоемкость шихты</td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.AverageHeatCapacityOfCharge, 4)</td>
+                    <td>кДж/(кг &#x2219 °С)</td>
+                </tr>
+                @* Индекс верха печи *@
+                <tr>
+                    <td colspan="3" scope="row"><b>Индекс верха печи</b></td>
+                    <td>@Math.Round(Model.СomparativePeriodData.Result.IndexOfTheFurnaceTop, 4)</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;">ДАТА ПРОВЕДЕНИЯ РАСЧЕТА</td>
+                    <td colspan="3" style="text-align: center;">@Model.СomparativePeriodData.Input.DateOfResult</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</section>

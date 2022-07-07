@@ -1,0 +1,415 @@
+﻿@model InputDataModel
+@{
+    ViewData["Title"] = "Главная";
+}
+
+<section class="index-main">
+    <div class="container">
+        <div class="index-main__content">
+            <h1 class="index-main__heading">TeploPro</h1>
+            <div class="index-main__description">Модуль расчетов проектных показателей теплового режима при изменении режимных и конструктивных параметров доменной печи</div>
+        </div>
+        <button id="runToCalculation" class="index-main__button">Перейти к расчету</button>
+    </div>
+    <div class="index-main__mask"></div>
+</section>
+
+<section id="calculation" class="index-calculation">
+    <div class="container">
+        <h2 class="index-calculation__title title">Расчёт показателей теплового режима доменной плавки</h2>
+        @if (ViewData["Variant"] != null)
+        {
+            <div class="index-calculation__head">
+                <h2 class="index-calculation__heading">Загружен вариант исходных данных №@ViewData["Variant"] от @ViewData["VariantDateTime"]</h2>
+                <a class="index-calculation__back" href="../Index">Сбросить</a>
+            </div>
+
+            <script>
+                $([document.documentElement, document.body]).animate({
+                    scrollTop: $("#calculation").offset().top - 60
+                }, 500);
+            </script>
+        }
+        else
+        {
+            <div class="index-calculation__head">
+                <h2 class="index-calculation__heading">Загружен вариант исходных данных по умолчанию</h2>
+            </div>
+        }
+        <form action="/Home/Index" id="inputForm" method="post" class="index-calculation__form">
+            <table id="resultTable" class="result-table" style="width: 65%; margin: 0 auto 30px auto;">
+                <tr id="thead">
+                    <th colspan="3">Параметр</th>
+                    <th scope="col" style="width: 15%;">Значение</th>
+                    <th scope="col">Ед. изм.</th>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Номер доменной печи</td>
+                    <td>
+                        <input class="form__input" name="NumberOfFurnace" type="text" value=@Model.NumberOfFurnace>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Полезный объем печи</td>
+                    <td>
+                        <input class="form__input" name="UsefulVolumeOfFurnace" type="text" value=@Model.UsefulVolumeOfFurnace>
+                    </td>
+                    <td>м<sup>3</sup></td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Полезная высота печи</td>
+                    <td>
+                        <input class="form__input" name="UsefulHeightOfFurnace" type="text" value=@Model.UsefulHeightOfFurnace>
+                    </td>
+                    <td>мм</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Диаметр колошника</td>
+                    <td>
+                        <input class="form__input" name="DiameterOfColoshnik" type="text" value=@Model.DiameterOfColoshnik>
+                    </td>
+                    <td>мм</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Диаметр распара</td>
+                    <td>
+                        <input class="form__input" name="DiameterOfRaspar" type="text" value=@Model.DiameterOfRaspar>
+                    </td>
+                    <td>мм</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Диаметр горна</td>
+                    <td>
+                        <input class="form__input" name="DiameterOfHorn" type="text" value=@Model.DiameterOfHorn>
+                    </td>
+                    <td>мм</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Высота горна</td>
+                    <td>
+                        <input class="form__input" name="HeightOfHorn" type="text" value=@Model.HeightOfHorn>
+                    </td>
+                    <td>мм</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Высота фурм</td>
+                    <td>
+                        <input class="form__input" name="HeightOfTuyeres" type="text" value=@Model.HeightOfTuyeres>
+                    </td>
+                    <td>мм</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Высота заплечников</td>
+                    <td>
+                        <input class="form__input" name="HeightOfZaplechiks" type="text" value=@Model.HeightOfZaplechiks>
+                    </td>
+                    <td>мм</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Высота распара</td>
+                    <td>
+                        <input class="form__input" name="HeightOfRaspar" type="text" value=@Model.HeightOfRaspar>
+                    </td>
+                    <td>мм</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Высота шахты</td>
+                    <td>
+                        <input class="form__input" name="HeightOfShaft" type="text" value=@Model.HeightOfShaft>
+                    </td>
+                    <td>мм</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Высота колошника</td>
+                    <td>
+                        <input class="form__input" name="HeightOfColoshnik" type="text" value=@Model.HeightOfColoshnik>
+                    </td>
+                    <td>мм</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Установленный уровень насыпи</td>
+                    <td>
+                        <input class="form__input" name="EstablishedLevelOfEmbankment" type="text" value=@Model.EstablishedLevelOfEmbankment>
+                    </td>
+                    <td>мм</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Число фурм</td>
+                    <td>
+                        <input class="form__input" name="NumberOfTuyeres" type="text" value=@Model.NumberOfTuyeres>
+                    </td>
+                    <td>шт.</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Суточная производительность печи</td>
+                    <td>
+                        <input class="form__input" name="DailyСapacityOfFurnace" type="text" value=@Model.DailyСapacityOfFurnace>
+                    </td>
+                    <td>т чугуна/сут</td>
+                </tr>
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row">Удельный расход кокса*</td>
+                    <td>
+                        <input class="form__input" name="SpecificConsumptionOfCoke" type="text" value=@Model.SpecificConsumptionOfCoke>
+                    </td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Удельный расход ЖРМ</td>
+                    <td>
+                        <input class="form__input" name="SpecificConsumptionOfZRM" type="text" value=@Model.SpecificConsumptionOfZRM>
+                    </td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Доля окатышей в шихте</td>
+                    <td>
+                        <input class="form__input" name="ShareOfPelletsInCharge" type="text" value=@Model.ShareOfPelletsInCharge>
+                    </td>
+                    <td>доли ед.</td>
+                </tr>
+                @* Параметры дутья *@
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row"><em>Параметры дутья*</em></td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">Расход</td>
+                    <td>
+                        <input class="form__input" name="BlastConsumption" type="text" value=@Model.BlastConsumption>
+                    </td>
+                    <td>м<sup>3</sup>/мин</td>
+                </tr>
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">Температура</td>
+                    <td>
+                        <input class="form__input" name="BlastTemperature" type="text" value=@Model.BlastTemperature>
+                    </td>
+                    <td>°С</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">Давление</td>
+                    <td>
+                        <input class="form__input" name="BlastPressure" type="text" value=@Model.BlastPressure>
+                    </td>
+                    <td>ати</td>
+                </tr>
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">Влажность</td>
+                    <td>
+                        <input class="form__input" name="BlastHumidity" type="text" value=@Model.BlastHumidity>
+                    </td>
+                    <td>г/м<sup>3</sup></td>
+                </tr>
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">Содержание кислорода</td>
+                    <td>
+                        <input class="form__input" name="OxygenContentInBlast" type="text" value=@Model.OxygenContentInBlast>
+                    </td>
+                    <td>%</td>
+                </tr>
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">Расход природного газа</td>
+                    <td>
+                        <input class="form__input" name="NaturalGasConsumption" type="text" value=@Model.NaturalGasConsumption>
+                    </td>
+                    <td>м<sup>3</sup>/т чугуна</td>
+                </tr>
+                @* Параметры колошникового газа *@
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row"><em>Параметры колошникового газа</em></td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">Температура</td>
+                    <td>
+                        <input class="form__input" name="ColoshGasTemperature" type="text" value=@Model.ColoshGasTemperature>
+                    </td>
+                    <td>°С</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">Давление</td>
+                    <td>
+                        <input class="form__input" name="ColoshGasPressure" type="text" value=@Model.ColoshGasPressure>
+                    </td>
+                    <td>ати</td>
+                </tr>
+                @* Состав колошникового газа *@
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row"><em>Состав колошникового газа</em></td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">CO</td>
+                    <td>
+                        <input class="form__input" name="ColoshGas_CO" type="text" value=@Model.ColoshGas_CO>
+                    </td>
+                    <td>%</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">CO<sub>2</sub></td>
+                    <td>
+                        <input class="form__input" name="ColoshGas_CO2" type="text" value=@Model.ColoshGas_CO2>
+                    </td>
+                    <td>%</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">H<sub>2</sub></td>
+                    <td>
+                        <input class="form__input" name="ColoshGas_H2" type="text" value=@Model.ColoshGas_H2>
+                    </td>
+                    <td>%</td>
+                </tr>
+                @* Состав чугуна *@
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row"><em>Состав чугуна*</em></td>
+                </tr>
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">Si</td>
+                    <td>
+                        <input class="form__input" name="Chugun_SI" type="text" value=@Model.Chugun_SI>
+                    </td>
+                    <td>%</td>
+                </tr>
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">Mn</td>
+                    <td>
+                        <input class="form__input" name="Chugun_MN" type="text" value=@Model.Chugun_MN>
+                    </td>
+                    <td>%</td>
+                </tr>
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">P</td>
+                    <td>
+                        <input class="form__input" name="Chugun_P" type="text" value=@Model.Chugun_P>
+                    </td>
+                    <td>%</td>
+                </tr>
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">S</td>
+                    <td>
+                        <input class="form__input" name="Chugun_S" type="text" value=@Model.Chugun_S>
+                    </td>
+                    <td>%</td>
+                </tr>
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">C</td>
+                    <td>
+                        <input class="form__input" name="Chugun_C" type="text" value=@Model.Chugun_C>
+                    </td>
+                    <td>%</td>
+                </tr>
+                @* Состав кокса *@
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row"><em>Состав кокса*</em></td>
+                </tr>
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">Содержание золы</td>
+                    <td>
+                        <input class="form__input" name="AshContentInCoke" type="text" value=@Model.AshContentInCoke>
+                    </td>
+                    <td>%</td>
+                </tr>
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">Содержание летучих</td>
+                    <td>
+                        <input class="form__input" name="VolatileContentInCoke" type="text" value=@Model.VolatileContentInCoke>
+                    </td>
+                    <td>%</td>
+                </tr>
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row" class="result-table-parameters">Содержание серы</td>
+                    <td>
+                        <input class="form__input" name="SulfurContentInCoke" type="text" value=@Model.SulfurContentInCoke>
+                    </td>
+                    <td>%</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Удельный выход шлака (по данным тех. отчета)</td>
+                    <td>
+                        <input class="form__input" name="SpecificSlagYield" type="text" value=@Model.SpecificSlagYield>
+                    </td>
+                    <td>кг/т чугуна</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Теплоёмкость агломерата</td>
+                    <td>
+                        <input class="form__input" name="HeatCapacityOfAgglomerate" type="text" value=@Model.HeatCapacityOfAgglomerate>
+                    </td>
+                    <td>кДж/(кг &#x2219 °С)</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Теплоёмкость окатышей</td>
+                    <td>
+                        <input class="form__input" name="HeatCapacityOfPellets" type="text" value=@Model.HeatCapacityOfPellets>
+                    </td>
+                    <td>кДж/(кг &#x2219 °С)</td>
+                </tr>
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row">Теплоёмкость кокса*</td>
+                    <td>
+                        <input class="form__input" name="HeatCapacityOfCoke" type="text" value=@Model.HeatCapacityOfCoke>
+                    </td>
+                    <td>кДж/(кг &#x2219 °С)</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Принятое значение температуры резервной зоны</td>
+                    <td>
+                        <input class="form__input" name="AcceptedTemperatureOfBackupZone" type="text" value=@Model.AcceptedTemperatureOfBackupZone>
+                    </td>
+                    <td>°С</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Доля тепловых потерь через нижнюю часть печи</td>
+                    <td>
+                        <input class="form__input" name="ProportionOfHeatLossesOfLowerPart" type="text" value=@Model.ProportionOfHeatLossesOfLowerPart>
+                    </td>
+                    <td>доли ед.</td>
+                </tr>
+                <tr class="calculate-data">
+                    <td colspan="3" scope="row">Средний размер куска шихты</td>
+                    <td>
+                        <input class="form__input" name="AverageSizeOfPieceCharge" type="text" value=@Model.AverageSizeOfPieceCharge>
+                    </td>
+                    <td>м</td>
+                </tr>
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row">Теплота горения природного газа на фурмах*</td>
+                    <td>
+                        <input class="form__input" name="HeatOfBurningOfNaturalGasOnFarms" type="text" value=@Model.HeatOfBurningOfNaturalGasOnFarms>
+                    </td>
+                    <td>кДж/м<sup>3</sup></td>
+                </tr>
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row">Теплота неполного горения углерода кокса*</td>
+                    <td>
+                        <input class="form__input" name="HeatOfIncompleteBurningCarbonOfCoke" type="text" value=@Model.HeatOfIncompleteBurningCarbonOfCoke>
+                    </td>
+                    <td>кДж/кг</td>
+                </tr>
+                <tr class="temperature-calculate-data">
+                    <td colspan="3" scope="row">Температура кокса, пришедшего к фурмам*</td>
+                    <td>
+                        <input class="form__input" name="TemperatureOfCokeThatCameToTuyeres" type="text" value=@Model.TemperatureOfCokeThatCameToTuyeres>
+                    </td>
+                    <td>°C</td>
+                </tr>
+            </table>
+            @if (ViewData["Variant"] != null)
+            {
+                <input class="form__input" name="inputId" type="number" value=@ViewData["Variant"] hidden>
+            }
+            @if (!ViewBag.IsSavedInputData)
+            {
+                <div class="checkbox-content">
+                    <input id="checkbox-save" type="checkbox" name="isSaveInputs" value="true" checked>
+                    <label for="checkbox-save">Сохранить вариант расчёта</label>
+                </div>
+                <button id="submitButton" class="form__submit" type="submit">Отправить</button>
+            }
+            else
+            {
+                <button id="submitButton" class="form__submit" type="submit">Показать результат</button>
+            }
+        </form>
+    </div>
+</section>
+

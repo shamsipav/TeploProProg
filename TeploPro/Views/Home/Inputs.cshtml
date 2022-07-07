@@ -1,0 +1,46 @@
+﻿@model IEnumerable<TeploPro.Models.InputDataModel>
+@{
+    ViewData["Title"] = "Варианты исходных данных";
+}
+
+<section class="inputs-main">
+    <div class="container">
+        <div class="inputs-main__head">
+            <h2 class="inputs-main__heading">Варианты исходных данных</h2>
+            <a class="inputs-main__back" asp-area="" asp-controller="Home" asp-action="Index">Назад</a>
+        </div>
+        <div class="inputs-main__block">
+            <div class="inputs-main__content content-inputs">
+                <h3 class="content-inputs__heading">Варианты исходных данных для базового периода</h3>
+                @if (Model.Count() == 0)
+                {
+                    <p>На данный момент сохраненных вариантов исходных данных нет.</p>
+                }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <div class="inputs-main__item">
+                            <a class="inputs-main__link" asp-action="Index" asp-controller="Home" asp-route-id="@item.Id">
+                                Вариант №@item.Id от @item.DateOfResult
+                            </a>
+                            <button type="button" class="inputs-main__item-delete button-delete" data-id="@item.Id">Удалить</button>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<div class="popup" data-id="">
+    <div class="popup__container popup__container-inputs">
+        <p class="popup__heading">Подтвердите удаление варианта исходных данных № <span class="input-id"></span></p>
+        <div class="popup__buttons">
+            <button type="button" class="popup__input-delete button-delete">Удалить</button>
+            <button type="button" class="popup__close button-deny">Отмена</button>
+        </div>
+    </div>
+</div>
+
+
+

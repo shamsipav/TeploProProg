@@ -1,0 +1,936 @@
+﻿@font-face {
+    font-family: "AbrilFatface-Regular";
+    font-display: swap;
+    src: url("/fonts/AbrilFatface-Regular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Roboto-Regular";
+    font-display: swap;
+    src: url("/fonts/Roboto-Regular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Roboto-Bold";
+    font-display: swap;
+    src: url("/fonts/Roboto-Bold.woff") format("woff");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Montserrat-Light";
+    font-display: swap;
+    src: url("/fonts/Montserrat-Light.woff") format("woff");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Montserrat-Regular";
+    font-display: swap;
+    src: url("/fonts/Montserrat-Regular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Montserrat-Bold";
+    font-display: swap;
+    src: url("/fonts/Montserrat-Bold.woff") format("woff");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Montserrat-Black";
+    font-display: swap;
+    src: url("/fonts/Montserrat-Black.woff") format("woff");
+    font-weight: 900;
+    font-style: normal;
+}
+
+/* ---------------- */
+/* Обнуляющие стили */
+/* ---------------- */
+* {
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+}
+
+    *,
+    *:before,
+    *:after {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+:focus,
+:active {
+    outline: none;
+}
+
+a:focus,
+a:active {
+    outline: none;
+}
+
+aside,
+nav,
+footer,
+header,
+section {
+    display: block;
+}
+
+html,
+body {
+    height: 100%;
+/*    min-width: $minwidth;*/
+}
+
+body {
+    /*line-height: 1;*/
+    font-family: "Montserrat-Regular";
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+table {
+    border-spacing: 0 !important;
+}
+
+input,
+button,
+textarea {
+    font-family: "Montserrat-Regular";
+}
+
+    input::-ms-clear {
+        display: none;
+    }
+
+button {
+    cursor: pointer;
+}
+
+    button::-moz-focus-inner {
+        padding: 0;
+        border: 0;
+    }
+
+a,
+a:visited {
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: none;
+    }
+
+ul li {
+    list-style: none;
+}
+
+img {
+    vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: inherit;
+    font-size: inherit;
+}
+
+.container {
+    max-width: calc(1170px + 40px);
+    padding: 0 20px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+sup {
+    vertical-align: top;
+    position: relative;
+    top: -0.3em;
+    z-index: -1;
+}
+
+/* ---------------------- */
+/* Пользовательские стили */
+/* ---------------------- */
+.header {
+    padding: 40px 0 0 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    /*transition: 0.3s cubic-bezier(0, 0, 0.58, 1);*/
+
+    color: #fff;
+}
+
+.header__content {
+    display: flex;
+    align-items: center;
+}
+
+.header__logo-text {
+    font-family: Montserrat-Black;
+    font-size: 25px;
+    text-transform: uppercase;
+
+    color: #ffd05b;
+
+    margin: 0 0 0 20px;
+}
+
+.header__logo {
+    width: 50px;
+    display: flex;
+    align-items: center;
+}
+
+    .header a,
+    .header a:visited {
+        color: #fff;
+    }
+
+    .header.scroll {
+        padding: 5px 0;
+        box-shadow: 0 1px 10px rgba(0, 0, 0, 0.15);
+        background-color: #fff;
+    }
+
+    .header .container {
+        display: flex;
+        align-items: center;
+    }
+
+.navigation {
+    margin: 0 0 0 auto;
+}
+
+    .navigation ul {
+        display: flex;
+        align-items: center;
+    }
+
+    .navigation li {
+        margin: 0 0 0 15px;
+    }
+
+    .navigation li:first-child a {
+        margin: 0;
+    }
+
+
+.footer {
+    padding-top: 80px;
+}
+
+.footer .container {
+    position: relative;
+    border-top: 2px solid lightgray;
+}
+
+
+.footer__content {
+    text-align: center;
+    padding: 30px 0 40px 0;
+}
+
+
+/* Section INDEX-MAIN */
+.index-main {
+    position: relative;
+    background-image: url("/img/index-blast-furnace.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.index-main__content {
+    text-align: center;
+}
+
+.index-main__heading {
+    font-family: Montserrat-Black;
+    font-size: 40px;
+    text-transform: uppercase;
+    color: #ffd05b;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 2px #140905;
+    user-select: none;
+}
+
+.index-main__description {
+    width: 70%;
+    margin: 0 auto 50px auto;
+    font-size: 20px;
+    font-family: Montserrat-Bold;
+    text-shadow: 2px 2px 2px #140905;
+}
+
+.index-main_mask {
+    background-color: rgba(0,0,0,.3);
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.index-main .container {
+    position: relative;
+    z-index: 10;
+}
+
+.index-main__button {
+    display: block;
+    width: fit-content;
+    color: #000;
+    margin: 0 auto 0 auto;
+    background-color: #fff;
+    padding: 8px 20px;
+    font-family: "Montserrat-Bold";
+    font-size: 15px;
+}
+
+
+.index-main__button:hover {
+    background-color: #ffd05b;
+    transition-duration: 0.3s;
+    cursor: pointer;
+}
+
+
+/* Section INDEX-CALCULATION */
+.index-calculation {
+    padding: 60px 0 0 0;
+    /*height: 100vh;*/
+}
+
+.index-calculation__head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 25px 0;
+}
+
+.index-calculation__heading {
+    font-family: Montserrat-Light;
+    font-size: 22px;
+    text-align: center;
+    margin: 0 15px 0 0;
+}
+
+.index-calculation__back {
+    display: block;
+    width: fit-content;
+    padding: 5px 10px;
+    margin: 0 0 0 auto;
+    background-color: #ffd05b;
+    color: #000 !important;
+    transition: 0.2s;
+    font-size: 16px;
+}
+
+    .index-calculation__back:hover {
+        background-color: #000;
+        color: #fff !important;
+        cursor: pointer;
+    }
+
+.index-calculation__back {
+    margin: 0 !important;
+}
+
+.index-calculation .container {
+}
+
+.index-calculation__form {
+
+}
+
+.form__input {
+    padding: 5px;
+    width: 100%;
+    background-color: lightgray;
+}
+
+.form__input-base {
+    font-size: 16px;
+}
+
+.result-table-input {
+    padding: 0 !important;
+}
+
+.result-table td.error {
+    position: relative;
+    background-color: #ffd05b;
+}
+
+    .result-table td.error::before {
+        position: absolute;
+        content: "Значение поля не может быть пустым";
+        background-color: #ffd05b;
+        top: 9px;
+        left: 105%;
+        width: max-content;
+        padding: 3px;
+        font-size: 11px;
+        z-index: 2;
+    }
+
+.result-table td.same-error {
+    position: relative;
+    background-color: #ff795b;
+}
+    .result-table td.same-error::before {
+        position: absolute;
+        content: "Некорректное значение поля";
+        background-color: #ff795b;
+        top: 9px;
+        left: 105%;
+        width: max-content;
+        padding: 3px;
+        font-size: 11px;
+        z-index: 2;
+    }
+
+/*..result-table td:same-error::before {
+    content: "Строка дурацкая"
+}*/
+
+.form__submit {
+    display: block;
+    width: fit-content;
+    background-color: #ffd05b;
+    color: #000;
+    margin: 0 auto;
+    padding: 8px 20px;
+    font-family: "Montserrat-Bold";
+    font-size: 15px;
+}
+
+    .form__submit:hover:enabled {
+        background-color: #000;
+        color: #fff;
+        transition-duration: 0.3s;
+        cursor: pointer;
+    }
+
+.lock {
+    background-color: lightgray;
+    user-select: none;
+    pointer-events: none;
+}
+
+.checkbox-content {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    margin: 0 auto 30px auto;
+}
+
+.checkbox-content label {
+    user-select: none;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+    .checkbox-content label:hover {
+        border-bottom: 1px solid;
+        margin-bottom: -1px;
+    }
+
+.checkbox-content input {
+    
+}
+
+.input-table {
+    width: 100%;
+}
+.input-table, .input-table td, .input-table th {
+    /*border: 1px solid black;*/
+    border-collapse: collapse;
+}
+
+    .input-table td, .input-table th {
+        /*text-align: center;*/
+        padding: 5px;
+    }
+
+/* Section RESULT-MAIN */
+.result-main {
+    padding: 150px 0 0 0;
+}
+
+.result-main__head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 50px 0;
+}
+
+.result-main__heading {
+    font-family: Montserrat-Bold;
+    font-size: 28px;
+    text-align: center;
+    margin: 0 15px 0 0;
+}
+
+.result-main__data {
+    padding: 0px 0px 30px 0px;
+}
+
+.result-main__table {
+    transition: all 0.2s ease;
+}
+.result-main__table.hide {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.result-main__data-heading, .result-main__table-heading {
+    font-family: Montserrat-Light;
+    margin: 0px 0px 10px 0px;
+}
+
+.result-main__checkbox {
+    display: block;
+    margin: 0px 0px 30px 0px;
+}
+
+.result-main__data-label {
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.result-main__data-value:hover {
+    cursor: pointer;
+    border-bottom: 1px solid #ffd05b;
+    color: #ffd05b;
+}
+
+.result-main__content.hide {
+    display: none;
+}
+
+.result-table {
+    width: 100%;
+}
+
+    .result-table, .result-table td, .result-table th {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    .result-table td, .result-table th {
+        /*text-align: center;*/
+        padding: 5px;
+    }
+
+.result-table-parameters {
+    padding-left: 25px !important;
+}
+
+.result-table-export {
+    padding: 5px 10px;
+    background-color: #ffd05b;
+    color: #000;
+    transition: 0.2s;
+    font-size: 16px;
+}
+    .result-table-export:hover {
+        background-color: #000;
+        color: #fff;
+    }
+
+.result-main__content {
+}
+
+.content-group {
+    margin: 0 0 10px 0;
+}
+
+.content-group__value {
+
+}
+
+/* Section INPUTS-MAIN */
+.inputs-main {
+    padding: 200px 0 0px 0;
+    display: flex;
+
+}
+
+.inputs-main__head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 50px 0;
+}
+
+.navigation__link, .inputs-main__back {
+    display: block;
+    width: fit-content;
+    padding: 5px 10px;
+    background-color: #ffd05b;
+    color: #000 !important;
+    transition: 0.2s;
+    font-size: 16px;
+}
+
+    .navigation__link:hover, .inputs-main__back:hover {
+        background-color: #000;
+        color: #fff !important;
+        cursor: pointer;
+    }
+
+.inputs-main__back {
+    margin: 0 !important;
+}
+
+.inputs-main__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inputs-main__content a {
+    margin-bottom: 15px;
+    color: #000;
+    cursor: pointer;
+}
+
+    .inputs-main__content a:hover {
+        text-decoration: underline;
+    }
+
+    .inputs-main__content a:last-child {
+        margin: 0;
+    }
+
+.inputs-main__heading {
+    font-family: Montserrat-Bold;
+    font-size: 28px;
+    text-align: center;
+    margin: 0 15px 0 0;
+}
+
+/* SECTION COMPARISON */
+.comparison-main {
+    padding: 150px 0 0 0;
+}
+
+.comparison-main .container {
+
+}
+
+.comparison-main__head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 50px 0;
+}
+
+.comparison-main__heading {
+    font-family: Montserrat-Bold;
+    font-size: 28px;
+    text-align: center;
+    margin: 0 15px 0 0;
+}
+
+.comparison-main__back {
+    display: block;
+    width: fit-content;
+    padding: 5px 10px;
+    margin: 0 0 0 auto;
+    background-color: #ffd05b;
+    color: #000 !important;
+    transition: 0.2s;
+    font-size: 16px;
+}
+
+    .comparison-main__back:hover {
+        background-color: #000;
+        color: #fff !important;
+        cursor: pointer;
+    }
+
+.comparison-main__back {
+    margin: 0 !important;
+}
+
+.comparison__form {
+    margin-bottom: 50px;
+}
+
+.form__content {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 50px;
+}
+
+.form__item {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 20px;
+    outline: 1px solid lightgray;
+}
+
+.form__item label {
+    margin-bottom: 10px;
+}
+
+.form__select-list {
+    cursor: pointer;
+    background-color: lightgrey;
+}
+
+/* SECTION TEMPERATURE */
+.temperature {
+    padding: 150px 0 0 0;
+}
+.temperature-main__head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 50px 0;
+}
+
+.temperature-main__heading {
+    font-family: Montserrat-Bold;
+    font-size: 28px;
+    text-align: center;
+    margin: 0 15px 0 0;
+}
+
+.result-main__description {
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* Section COEFFICIENTS REFERENCE */
+.reference {
+    padding: 150px 0px 0px 0px;
+}
+
+.reference__heading {
+    text-align: center;
+    margin-right: 15px;
+}
+
+.reference__table {
+    margin-bottom: 50px;
+}
+
+.form-reference__input {
+    padding: 5px;
+    width: 100%;
+    background-color: lightgray;
+}
+
+/* Section PROJECT MODE */
+.project {
+    padding: 150px 0px 0px 0px;
+}
+
+.project__heading {
+    text-align: center;
+    margin-right: 15px;
+}
+
+.project-blast-temperature {
+    position: relative;
+}
+
+.project-blast-temperature-max {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+/*    top: 9px;
+    left: 105%;*/
+    background-color: #5bd2ff;
+    width: 100%;
+    font-size: 11px;
+    padding: 3px;
+    z-index: 5;
+}
+
+.project__select-heading {
+    margin: 0px 0px 15px 0px;
+}
+
+.project__select {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.form-project__content {
+    position: relative;
+}
+
+#loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-family: Montserrat-Bold;
+    background-color: rgb(173, 216, 230, 0.6);
+    z-index: 10;
+    display: none;
+}
+
+/* SOME STYLES */
+.correct {
+    background-color: lightgreen;
+}
+
+.incorrect {
+    background-color: #ff795b;
+}
+
+.result-table-export {
+    background-color: #5be1ff;
+}
+
+.inputs-main__block {
+
+}
+
+.content-inputs__heading {
+    font-family: 'Montserrat-Light';
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.index-calculation__title {
+    text-align: center;
+    margin: 0 0 30px 0;
+}
+
+.comparison-main__link {
+    display: block;
+    width: fit-content;
+    padding: 5px 10px;
+    background-color: #ffd05b;
+    color: #000 !important;
+    transition: 0.2s;
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+.comparison-main__link:last-child {
+    margin-bottom: 0;
+}
+
+    .comparison-main__link:hover {
+        background-color: #000;
+        color: #fff !important;
+        cursor: pointer;
+    }
+
+.comparison-main__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.result-table {
+    overflow: auto;
+}
+
+#thead {
+    position: sticky;
+    top: 59px;
+    background-color: #fff;
+    box-shadow: inset 0 -1px 0 #000000;
+    z-index: 6;
+}
+
+.hidden {
+    display: none;
+}
+
+.checkbox-content-temp-label {
+    font-size: 16px;
+}
+
+.result-main__chart {
+    position: relative;
+    height: 400px;
+}
+
+.result-main__chart-heading {
+    font-size: 18px;
+    text-align: center;
+    margin: 30px 0;
+}
+
+.result-main__charts {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 20px;
+}
+
+.result-main__charts-heading {
+    font-family: Montserrat-Bold;
+    font-size: 20px;
+    display: block;
+    text-align: center;
+    margin: 0px 0px 30px 0px;
+}
+
+.inputs-main__item-delete {
+    margin: 0px 0px 0px 10px;
+}
+
+.inputs-main__item {
+    margin: 0px 0px 15px 0px;
+}
+
+/* Media Queries */
+@media (max-width: 880px) {
+    #thead {
+        top: 99px;
+    }
+   .header .container {
+       display: block;
+   }
+
+    .header__content {
+        margin-bottom: 10px;
+    }
+
+    .navigation ul {
+        justify-content: center;
+    }
+}
